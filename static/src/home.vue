@@ -60,6 +60,12 @@
           email: '',
           password:''
         },
+        currentUser: {
+          firstName: '',
+          lastName: '',
+          email: '',
+          userTypeID: ''
+        },
         title: 'Even Keel Login'
       }
     },
@@ -76,9 +82,14 @@
         $.post('/api/login', JSON.stringify(this.checkUser) )
           .done(function(data){
             this.result = data;
-            console.log(this.result)
-            if(this.result == 'true'){
-              this.$router.push('/myApp');
+            console.log(data);
+            if(this.result != 'false'){
+              //re-routing and passing params, this.result goes to page
+              this.$router.push({
+                //we had to use this name for the route, defined in main.js
+                name: 'my-app', 
+                params: this.result
+              });
             } else {
               this.loginFail = true;
             }

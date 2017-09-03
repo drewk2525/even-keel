@@ -20,6 +20,7 @@ const routes = [
   },
   {
     path: '/myApp',
+    name: 'my-app',
     component: MyApp
   }
 ]

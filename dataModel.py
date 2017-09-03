@@ -1,4 +1,4 @@
-from flask import Flask, json
+from flask import Flask, json, jsonify
 import random
 import hashlib
 from database import db
@@ -41,14 +41,25 @@ def getUserTypes():
   userTypes = LKUserType.query.order_by(LKUserType.UserTypeID)
   return userTypes
 
+# user being passed in here is user data from the form
 def checkLogin(user):
+  # accessing the email of that user from form
   userEmail = user['email']
-  checkUser = db.session.query(Users).filter(Users.Email == userEmail).first()
+  checkUser = db.session.query(Users.FirstName, Users.LastName, Users.Email, Users.Salt, Users.Password, Users.UserTypeID, LKUserType.UserTypeDescription).join(LKUserType).filter(Users.Email == userEmail).first()
   if checkUser is None:
+    # when returning bools, change to json.dumps(bool)
     return json.dumps(False)
+  
+  # we might want to encapsulate this into a method
   hashedPW = hashlib.sha512(user['password']+checkUser.Salt).hexdigest()
   if hashedPW == checkUser.Password:
-    return json.dumps(True)
+    return jsonify( 
+      first = checkUser.FirstName,
+      last = checkUser.LastName,
+      email = checkUser.Email,
+      userTypeID = checkUser.UserTypeID,
+      userTypeDescription = checkUser.UserTypeDescription
+    )
   else:
     return json.dumps(False)
     

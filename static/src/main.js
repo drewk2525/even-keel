@@ -5,25 +5,23 @@ import App from './App.vue'
 //import ProductLIst from './ProductList.vue'
 import LoginPage from './login.vue'
 import Home from './home.vue'
+import MyApp from './myApp.vue'
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/login',
-//    ,
-//    component: ProductList
     component: LoginPage
   },
   {
     path: '/',
     component: Home
+  },
+  {
+    path: '/myApp',
+    component: MyApp
   }
-//  ,
-//  {
-//    path: '/products/:id',
-//    component: Product
-//  }
 ]
 
 const router = new VueRouter({

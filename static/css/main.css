@@ -9,6 +9,10 @@ html {
   margin-right: auto;
   width: 960px; }
 
+.error {
+  color: #dd6666;
+  font-weight: bold; }
+
 header {
   text-align: left;
   display: grid;

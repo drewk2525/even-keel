@@ -17,48 +17,55 @@
         <fieldset>
           <legend>User Type:</legend>
           <label class="radio-label" for="user-type-1">Athlete:</label>
-          <input type="radio" name="user-type" value="1" id="user-type-1">
+          <input type="radio" name="user-type" value="1" id="user-type-1" v-model="newUser.userType">
           <label class="radio-label" for="user-type-2">Coach:</label>
-          <input type="radio" name="user-type" value="2" id="user-type-2">
+          <input type="radio" name="user-type" value="2" id="user-type-2" v-model="newUser.userType">
           <label class="radio-label" for="user-type-3">Admin</label>
-          <input type="radio" name="user-type" value="3" id="user-type-3">
+          <input type="radio" name="user-type" value="3" id="user-type-3" v-model="newUser.userType">
         </fieldset>
         <label>First Name:</label>
-        <input type="text" name="first-name" placeholder="First Name"><br>
+        <input type="text" name="first-name" placeholder="First Name" v-model="newUser.firstName"><br>
         <label>Last Name:</label>
-        <input type="text" name="last-name" placeholder="Last Name">
+        <input type="text" name="last-name" placeholder="Last Name" v-model="newUser.lastName">
         <label>Email Address:</label>
-        <input type="text" name="email" placeholder="you@example.com">
+        <input type="text" name="email" placeholder="you@example.com" v-model="newUser.email">
         <label>Password:</label>
-        <input type="password" name="password">
+        <input type="password" name="password" v-model="newUser.password">
         <label>Repeat Password:</label>
-        <input type="password" name="repeat-password">
+        <input type="password" name="repeat-password" v-model="newUser.repeatPassword">
         <button>Create Account</button>
       </form>
     </div>
   </div>
 </template>
 
-<script>
-  
-  
+<script>  
   export default {
     name: 'app',
     props: ['msg'],
     data () {
       return {
+        newUser: {
+          userType: 1,
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          repeatPassword: ''
+        },
         user: {},
         title: 'Even Keel Login'
       }
     },
     methods: {
       login: function(event){
-        $.post('/login')
+        $.post('/api/newUser', JSON.stringify(this.newUser) )
           .done(function(data){
             this.user = data;
-            console.log(this.user.email);
-            console.log(this.user.first);
-            console.log(this.user.last);
+            this.$router.push('/login');
+//            console.log(this.user.first);
+//            console.log(this.user.last);
+//            console.log(this.user.email);
           }.bind(this));
       }
     }

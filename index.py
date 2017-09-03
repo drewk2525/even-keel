@@ -16,13 +16,34 @@ app.debug = True
 def home():
   return render_template('home.html')
 
-@app.route("/login", methods=['POST'])
-def login():
-  return jsonify(
-    first="Drew",
-    last="Kroft",
-    email="drewk2525@yahoo.com"
-  )
+@app.route("/api/newUser", methods=['POST'])
+def newUser():
+  if request.method == 'POST':
+    newUser = request.get_json(force=True, silent=True)
+    userType = newUser['userType']
+    first = newUser['firstName']
+    last = newUser['lastName']
+    email = newUser['email']
+    password = newUser['password']
+    addUser(userType, first, last, email, password)
+    return jsonify( 
+      first = first,
+      last = last,
+      email = email
+    )
+  else:
+    return false
+#  newUserPy = json.loads(request.json)
+#  return jsonify(
+#    first = newUserPy.firstName,
+#    last = newUserPy.lastName,
+#    email = newUserPy.email
+#    first = request.json['firstName'],
+#    last = request.json['lastName'],
+#    email = request.json['email']
+#  )
+
+
 #  if request.method == 'POST':
 #    default = ''
 #    first = request.form['first-name']

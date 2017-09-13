@@ -2,16 +2,65 @@
   box-sizing: border-box; }
 
 html {
-  text-align: center; }
+  text-align: center;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif; }
 
 .container {
   margin-left: auto;
   margin-right: auto;
   width: 960px; }
 
-.error {
-  color: #dd6666;
-  font-weight: bold; }
+input.error {
+  border: 2px solid #dd3333; }
+
+fieldset.error {
+  border: 5px solid #dd3333;
+  color: #dd3333;
+  font-weight: bold;
+  width: 100%; }
+
+ul.error:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0;
+  border-color: #dd3333 transparent;
+  top: -20px;
+  /* value = - border-top-width - border-bottom-width */
+  bottom: auto;
+  left: auto;
+  right: 20px;
+  /* controls horizontal position */
+  border-width: 0 20px 20px;
+  border-style: solid; }
+
+ul.error:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0;
+  border-color: #fff transparent;
+  top: -15px;
+  /* value = - border-top-width - border-bottom-width */
+  bottom: auto;
+  left: auto;
+  right: 25px;
+  /* value = (:before right) + (:before border-right) - (:after border-right) */
+  border-width: 0 15px 15px;
+  border-style: solid; }
+
+ul.error {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 0.9em;
+  margin-left: 25%;
+  position: relative;
+  text-align: left;
+  width: 70%;
+  color: #dd3333;
+  font-weight: bold;
+  border: 3px solid #dd3333;
+  border-radius: 15px; }
 
 header {
   text-align: left;
@@ -45,7 +94,7 @@ form label {
 form label.radio-label {
   width: 80px; }
 form input {
-  margin: 5px auto 20px;
+  margin: 5px auto 5px;
   display: inline-block;
   height: 30px;
   border-radius: 5px;

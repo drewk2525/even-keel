@@ -7,22 +7,43 @@
         </a>
       </div>
       <div class="title">
-        <h3>{{ title }}</h3>
+<!--        <nav-bar @reload-nav="reloadNav"></nav-bar>-->
+        <button v-if="validSession" @click="logout">Log Out</button>
       </div>
     </header>
-    <router-view :msg="msg">
+    <router-view :msg="msg" @update-session="updateIsValidSession">
     </router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'some Message',
-      title: 'Welcome to Even Keel'
+  import axios from 'axios'
+  import { isValidSession } from '../js/session.js'
+  import navBar from './navBar.vue'
+  
+  export default {
+    name: 'app',
+    components: {
+      navBar
+    },
+    data () {
+      return {
+        validSession: false,
+        userData: {}
+      }
+    },
+    methods:{
+      logout: function(){
+        axios.post('/api/logout').then(function(data){
+          this.$router.push({
+            name: 'home', 
+            params: this.result
+          });
+        }.bind(this));
+      },
+      updateIsValidSession: function(userData){
+        this.validSession = isValidSession(userData);
+      }
     }
   }
-}
 </script>

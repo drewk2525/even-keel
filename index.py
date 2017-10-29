@@ -3,10 +3,9 @@ from flask.ext.session import Session
 #from flask_sqlalchemy import * 
 #from flask.ext.session import Session
 from database import app, db
-from dataModel import Users, addUser, getUsers, checkLogin, getHeartRateTypes, getUserID, addHeartRate
+from dataModel import Users, checkLogin, HeartRates, LKHeartRateType
 import jinja2
 
-app.debug = True
 app.debug = True
 app.secret_key = 'super-secret'
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -23,7 +22,8 @@ def home():
 def newUser():
   if request.method == 'POST':
     newUser = request.get_json(force=True, silent=True)
-    addUser(newUser)
+    user = Users()
+    user.addUser(newUser)
     return jsonify( 
       newUser
     )
@@ -32,13 +32,12 @@ def newUser():
   
 @app.route("/api/login", methods=['POST'])
 def login():
-#  session['user']
   if request.method == 'POST':
     user = request.get_json(force=True, silent=True)
     session['user'] = checkLogin(user)
     if(session['user'] != "false"):
       session['isValid'] = 'True'
-      session['userID'] = getUserID(user)
+      session['userID'] = Users().getUserID(user)
       return session['user']
     else:
       session.clear()
@@ -58,9 +57,8 @@ def checkValidSession():
 @app.route("/api/getHeartRateTypes", methods=['POST'])
 def hrTypes():
   if request.method == 'POST':
-    heartRateTypes = getHeartRateTypes() 
+    heartRateTypes = LKHeartRateType().getHeartRateTypesJSON()
     return heartRateTypes
-#    return jsonify( heartRateTypes )
   else:
     return json.dumps(False)
   
@@ -69,7 +67,7 @@ def addHR():
   if request.method == 'POST':
     HR = request.get_json(force=True, silent=True)
     userID = session['userID']
-    HRResult = addHeartRate(HR, userID)
+    HRResult = HeartRates.addHeartRate(HR, userID)
     return HRResult
   else:
     return json.dumps(False)

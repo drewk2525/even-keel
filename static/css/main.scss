@@ -1,162 +1,441 @@
+////  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+//
+//$errorColor: #dd3333;
+////$errorFontColor: #f3f3f3;
+//
+//* {
+//  box-sizing: border-box;
+//}
+//
+//html{
+//  text-align: center;
 //  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-
-$errorColor: #dd3333;
-//$errorFontColor: #f3f3f3;
-
-* {
-  box-sizing: border-box;
-}
-
-html{
-  text-align: center;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-}
-
-.container{
-  margin-left: auto;
-  margin-right: auto;
-  width: 960px;
-}
-
-
-input.error{
-  border: 2px solid $errorColor;
-}
-
-fieldset.error{
-  border: 5px solid $errorColor;
-  color: $errorColor;
-  font-weight: bold;
-  width: 100%;
-}
-
-ul.error:before {
-  content:"";
-  position:absolute;
-  display:block;
-  width:0;
-  border-color:$errorColor transparent;
-  top:-20px; /* value = - border-top-width - border-bottom-width */
-  bottom:auto;
-  left:auto;
-  right:20px; /* controls horizontal position */
-  border-width:0 20px 20px;
-  border-style: solid;
-}
-ul.error:after {
-  content:"";
-  position:absolute;
-  display: block;
-  width:0;
-  border-color: #fff transparent;
-  top:-15px; /* value = - border-top-width - border-bottom-width */
-  bottom:auto;
-  left:auto;
-  right:25px; /* value = (:before right) + (:before border-right) - (:after border-right) */
-  border-width:0 15px 15px;
-  border-style: solid;
-}
-ul.error{
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 0.9em;
-  margin-left: 25%;
-  position: relative;
-  text-align: left;
-  width: 70%;
-  color: $errorColor;
-  font-weight: bold;
-  border: 3px solid $errorColor;
-  border-radius: 15px;
-}
-
-//.error{
+//}
+//
+//.container{
+//  margin-left: auto;
+//  margin-right: auto;
+//  width: 960px;
+//}
+//
+//
+//input.error{
+//  border: 2px solid $errorColor;
+//}
+//
+//fieldset.error{
+//  border: 5px solid $errorColor;
 //  color: $errorColor;
 //  font-weight: bold;
+//  width: 100%;
+//}
+//
+//ul.error:before {
+//  content:"";
+//  position:absolute;
+//  display:block;
+//  width:0;
+//  border-color:$errorColor transparent;
+//  top:-20px; /* value = - border-top-width - border-bottom-width */
+//  bottom:auto;
+//  left:auto;
+//  right:20px; /* controls horizontal position */
+//  border-width:0 20px 20px;
+//  border-style: solid;
+//}
+//ul.error:after {
+//  content:"";
+//  position:absolute;
+//  display: block;
+//  width:0;
+//  border-color: #fff transparent;
+//  top:-15px; /* value = - border-top-width - border-bottom-width */
+//  bottom:auto;
+//  left:auto;
+//  right:25px; /* value = (:before right) + (:before border-right) - (:after border-right) */
+//  border-width:0 15px 15px;
+//  border-style: solid;
+//}
+//ul.error{
+//  padding-top: 5px;
+//  padding-bottom: 5px;
+//  font-size: 0.9em;
+//  margin-left: 25%;
+//  position: relative;
+//  text-align: left;
+//  width: 70%;
+//  color: $errorColor;
+//  font-weight: bold;
+//  border: 3px solid $errorColor;
+//  border-radius: 15px;
+//}
+//
+////.error{
+////  color: $errorColor;
+////  font-weight: bold;
+////}
+//
+//header{
+//  text-align: left;
+//  display: grid;
+//  grid-template-columns: 1fr 1fr;
+//  border-bottom: 2px solid black;
+//  margin-bottom: 20px;
+//  .title{
+//    text-align: right;
+//  }
+//}
+//
+//.home.main-body{
+//  text-align: center;
+//  display: grid;
+//  grid-template-columns: 1fr 1fr;
+//  .login{
+//    
+//  }
+//  .new-account{
+//    
+//  }
+//}
+//
+//form{
+//  input, button{
+//    transition: all 0.6s ease;
+//	-moz-transition: all 0.6s ease;
+//	-webkit-transition: all 0.6s ease;
+//	-o-transition: all 0.6s ease;
+//	-ms-transition: all 0.6s ease;
+//  }
+//  fieldset{
+//    margin-bottom: 10px;
+//    width: 80%;
+//    margin-left: auto;
+//    margin-right: auto;
+//  }
+//  label{
+//    display: inline-block;
+//    text-align: right;
+//    width: 40%;
+//  }
+//  label.radio-label{
+//    width: 80px;
+//  }
+//  input{
+//    margin: 5px auto 5px;
+//    display: inline-block;
+//    height: 30px;
+//    border-radius: 5px;
+//    width: 50%;
+//  }
+//  input[type="radio"]{
+//    margin: 10px 5px;
+//    width: 15px;
+//    height: 15px;
+//  }
+//  input:hover, input:focus{
+//    background: #dfe5ec;
+//	color: #414848;
+//  }
+//  button{
+//    width: 120px;
+//    height: 45px;
+//    float: right;
+//    margin-right: 5%;
+//    text-shadow: 0px 1px 0 rgba(0,0,0,0.25);
+//    font-size: 16px;
+//    color: #ffffff;
+//    background: #46b0d1;
+//	border: 1px solid #46b3d3;
+//	border-radius: 5px;
+//	cursor: pointer;
+//    box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+//	-moz-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+//	-webkit-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+//  }
+//  button:hover{
+//    background: #308da8;
+//	border: 1px solid rgba(256,256,256,0.75);
+//	box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+//	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+//	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+//  }
 //}
 
-header{
-  text-align: left;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 2px solid black;
-  margin-bottom: 20px;
-  .title{
-    text-align: right;
+$darkBlue: #1C2A3F;
+$blue: #85A4B9;
+$lightBlue: #E6E7E8;
+$green: #88C651;
+$offwhite: #F2F4F6;
+$lightGrey: #E6E7E7;
+$red: #cf4242;
+$lightOrange: #FEEAC9;
+$orange: #FA9944;
+
+body{
+  font-family: 'Muli', sans-serif;
+  color: $darkBlue;
+  header{
+    position: relative;
+    margin: 0 auto;
+    width: 960px;
+    height: 150px;
+    background-color: #ffffff;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .logo{
+      margin-top: 15px;
+      height: 120px;
+    }
+    .title{
+      text-align: right;
+    }
+  }
+  nav{
+    color: $blue;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    font-size: 20px;
+    a{
+      color: $darkBlue;
+      text-decoration: none;
+      width: 120px;
+      display: inline-block;
+      text-align: center;
+      font-weight: 300;
+    }
+    a:hover{
+      font-weight: 400;
+      text-decoration: underline;
+    }
+  }
+  div.container{
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+  }
+  .error{
+    background-color: $lightOrange!important;
+    color: $darkBlue;
+    border: 2px solid $orange!important;
+  }
+  .alert .alert__icon.icon, .alert__dismissible .icon {
+    color: $orange;
   }
 }
 
-.home.main-body{
-  text-align: center;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  .login{
-    
-  }
-  .new-account{
-    
+.mainBody .contentBody{
+  background-color: $lightBlue;
+  border-top: 1px solid $blue;
+  border-bottom: 1px solid $blue;
+}
+
+.mainBody{
+  .mainBodyWrapper{
+    width: 100%;
+    text-align: center;
+    display: grid;
+    padding: 40px;
+    form{
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      background-color: $offwhite;
+      border: 1px solid $blue;
+      clear: both;
+      padding: 50px 0;
+      label{
+        width: 25%;
+        display: inline-block;
+        font-size: 1.3em;
+        float: left;
+        margin-left: 5px;
+        margin-top: 10px;
+      }
+      label.radio-label{
+        width: auto;
+        margin-right: 50px;
+        font-size: 1.1em;
+        vertical-align: middle;
+        text-align: left;
+        float: none;
+      }
+      input, select{
+        border: 2px solid $darkBlue;
+        background-color: $lightGrey;
+        height: 40px;
+        padding: 5px;
+      }
+      input{
+        text-align: left;
+        margin: 5px 5% 15px 5px;
+        width: 65%;
+      }
+      input:focus{
+        background-color: $offwhite;
+        border-color: $blue;
+      }
+      input[type="radio"]{
+        margin: 5px 15px 0 5px;
+        width: auto;
+        vertical-align: middle;
+      }
+      ul.error{
+        text-align: left;
+        margin-left: 30%;
+        width: 65%;
+        margin-top: -10px;
+        margin-bottom: 15px;
+      }
+      ul.error::input-placeholder {
+         color: $darkBlue;
+      }
+    }
   }
 }
 
-form{
-  input, button{
-    transition: all 0.6s ease;
-	-moz-transition: all 0.6s ease;
-	-webkit-transition: all 0.6s ease;
-	-o-transition: all 0.6s ease;
-	-ms-transition: all 0.6s ease;
-  }
-  fieldset{
-    margin-bottom: 10px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  label{
-    display: inline-block;
-    text-align: right;
-    width: 40%;
-  }
-  label.radio-label{
-    width: 80px;
-  }
-  input{
-    margin: 5px auto 5px;
-    display: inline-block;
-    height: 30px;
-    border-radius: 5px;
-    width: 50%;
-  }
-  input[type="radio"]{
-    margin: 10px 5px;
-    width: 15px;
-    height: 15px;
-  }
-  input:hover, input:focus{
-    background: #dfe5ec;
-	color: #414848;
-  }
+/*
+    Buttons
+*/
+body{
   button{
-    width: 120px;
-    height: 45px;
-    float: right;
-    margin-right: 5%;
-    text-shadow: 0px 1px 0 rgba(0,0,0,0.25);
-    font-size: 16px;
-    color: #ffffff;
-    background: #46b0d1;
-	border: 1px solid #46b3d3;
-	border-radius: 5px;
-	cursor: pointer;
-    box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-	-moz-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-	-webkit-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+    border-radius: 6px;
+    width: 190px;
+    height: 60px;
+    font-size: 1.5em;
+    color: $darkBlue;
+    transition: 0.3s;
   }
   button:hover{
-    background: #308da8;
-	border: 1px solid rgba(256,256,256,0.75);
-	box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    box-shadow: 3px 3px 10px #000000;
+    font-weight: bold;
+  }
+  button.blueButton, button.registrationTab{
+    background-color: $blue;
+  }
+  button.blueButton:hover, button.registrationTab:hover{
+    background-color: lighten($blue, 5%);
+  }
+  button.greenButton{
+    background-color: $green;
+  }
+  button.greenButton:hover{
+    background-color: lighten($green, 5%);
+  }
+  button[type="submit"]{
+    margin-bottom: 30px;
+    margin-right: 5%;
+  }
+}
+
+/*
+    Home Page
+*/
+
+.home {
+  height: 100%;
+  .landingPageHeader{
+    width: 960px;
+    position: relative;
+    float: right;
+    right: 50%;
+    margin-right: -480px;
+    nav{
+      text-align: right;
+      width: 960px;
+      position: absolute;
+      top: 120px;
+      z-index: 100;
+      a{
+        font-weight: 400;
+      }
+    }
+  }
+  .landingPage{
+    text-align: center;
+    height: 100%;
+    .buttons{
+      z-index: 10;
+      position: absolute;
+      width: 420px;
+      margin-left: 50%;
+      left: -210px;
+      top: 95%;
+      .landingRegisterButton, .landingLoginButton{
+        position: absolute;
+        bottom: 30px;
+        z-index: 10;
+      }
+      .landingRegisterButton{
+        left: 0;
+      }
+      .landingLoginButton{
+        right: 0;
+      }
+    }
+      .parallax{
+      height: 100%;
+      width: 100%;
+      /*top: 400px;*/
+    }
+    .parallax__image{
+      width: 100%;
+      bottom: 50%;
+    }
+    .logo{
+      position: absolute;
+      left: 20px;
+      top: 20px;
+    }
+  }
+  .contentBody{
+    height: 2500px;
+  }
+}
+
+
+/* 
+    Registration / Login page
+*/
+
+.registrationPage{
+  .mainBodyWrapper{
+    grid-template-columns: 1fr 600px 1fr;
+    .formWrapper{
+      text-align: left;
+    }
+    .registrationTab{
+      margin: 0;
+      border: 1px solid $blue;
+      border-radius: 0;
+      float: left;
+      margin-bottom: -1px;
+      font-weight: 400;
+      box-shadow: inset 2px -2px 5px rgba(0,0,0,0.3);
+    }
+    .registrationTab:first-of-type{
+      box-shadow: inset -2px -2px 5px rgba(0,0,0,0.3);
+    }
+    .registrationTab:first-of-type:hover{
+      box-shadow: inset -2px -2px 2px rgba(0,0,0,0.3);
+    }
+    .registrationTab:hover{
+      box-shadow: inset 2px -2px 2px rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
+    .registrationTab.active{
+      background-color: $offwhite;
+      border-bottom: none;
+      box-shadow: none;
+    }
+    .registrationTab.active:hover{
+      cursor: default;
+      font-weight: 400;
+    }
+    form{
+      text-align: right;
+    }
   }
 }

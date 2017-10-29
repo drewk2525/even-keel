@@ -21,17 +21,13 @@ function isValidSession(userData){
   return true;
 }
 
-function getUserData(callBack = null){
-  axios.post('/api/checkValidSession')
+function getUserData(){
+  return axios.post('/api/checkValidSession')
     .then(function(data){
       if(data['data'] == 0){
         return 0;
       }
-      if(typeof callBack === "function"){
-        callBack(data['data']);
-      } else {
-        return data['data'];
-      }
+      return data['data'];
     });
 }
 

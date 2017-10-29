@@ -7,35 +7,72 @@ from datetime import datetime
 ### User Table ###
 class Users(db.Model):
   __table__ = db.Table('Users', db.metadata, autoload=True, autoload_with=db.engine)
+  def __init__(self):
+    pass
+  
+  def addUser(self, newUser):
+    self.UserTypeID = newUser['userTypeID']
+    self.FirstName = newUser['firstName']
+    self.LastName = newUser['lastName']
+    self.Email = newUser['email']
+    password = newUser['password']
+    self.Salt = createSalt()
+    self.Password = hashlib.sha512(password+self.Salt).hexdigest()
+    db.session.add(self)
+    db.session.commit()
+    return True
+  
+  # user being passed in here is user data from the form
+  def getUserID(self, user):
+    # accessing the email of that user from form
+    userEmail = user['email']
+    checkUser = db.session.query(Users.UserID, Users.Salt, Users.Password).filter(Users.Email == userEmail).first()
+    if checkUser is None:
+      # when returning bools, change to json.dumps(bool)
+      return json.dumps(False)
 
-### User Table ###
+    hashedPW = hashlib.sha512(user['password']+checkUser.Salt).hexdigest()
+    if hashedPW == checkUser.Password:
+      return checkUser.UserID
+    else:
+      return json.dumps(False)
+
+### LKHeartRateType Table ###
 class LKHeartRateType(db.Model):
   __table__ = db.Table('LKHeartRateType', db.metadata, autoload=True, autoload_with=db.engine)
   
-### LKUserTypeTable ###
+  def getHeartRateTypesJSON(self):
+    hrTypes = db.session.query(LKHeartRateType.HeartRateTypeID, LKHeartRateType.HeartRateTypeDescription).order_by(LKHeartRateType.HeartRateTypeID).all()
+    return json.dumps( hrTypes )
+
+  def addHeartRate(HR, UserID):
+    BPM = HR['heartRateValue']
+    HeartRateTypeID = HR['heartRateType']
+    HeartRate = HeartRates(HeartRateTypeID=HeartRateTypeID, BPM=BPM, UserID=UserID, CreateDT=datetime.utcnow())
+    db.session.add(HeartRate)
+    db.session.commit()
+    return json.dumps(True)
+  
+### LKUserType Table ###
 class LKUserType(db.Model):
   __table__ = db.Table('LKUserType', db.metadata, autoload=True, autoload_with=db.engine)
   
+  def getUserTypes():
+    userTypes = db.session.query.order_by(LKUserType.UserTypeID)
+    return userTypes
+  
 ### HeartRates Table ###
 class HeartRates(db.Model):
-  __table__ = db.Table('HeartRates', db.metadata, autoload=True, autoload_with=db.engine)  
+  __table__ = db.Table('HeartRates', db.metadata, autoload=True, autoload_with=db.engine)
   
-def addUser(newUser):
-  userTypeID = newUser['userTypeID']
-  first = newUser['firstName']
-  last = newUser['lastName']
-  email = newUser['email']
-  password = newUser['password']
-  salt = createSalt()
-  hashedPW = hashlib.sha512(password+salt).hexdigest()
-  user = Users(UserTypeID=userTypeID, FirstName=first, LastName=last, Email=email, Salt=salt, Password=hashedPW)
-  db.session.add(user)
-  db.session.commit()
-  return True
-
-def getUsers():
-  users = Users.query.order_by(Users.LastName, Users.FirstName.desc())
-  return user
+  def addHeartRate(HR, UserID):
+    self.BPM = HR['heartRateValue']
+    self.HeartRateTypeID = HR['heartRateType']
+    self.UserID = UserID
+    self.CreateDT = datetime.utcnow()
+    db.session.add(self)
+    db.session.commit()
+    return json.dumps(True)
 
 def createSalt():
   ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -44,10 +81,6 @@ def createSalt():
     chars.append(random.choice(ALPHABET))
 
   return "".join(chars)
-
-def getUserTypes():
-  userTypes = LKUserType.query.order_by(LKUserType.UserTypeID)
-  return userTypes
 
 # user being passed in here is user data from the form
 def checkLogin(user):
@@ -58,7 +91,6 @@ def checkLogin(user):
     # when returning bools, change to json.dumps(bool)
     return json.dumps(False)
   
-  # we might want to encapsulate this into a method
   hashedPW = hashlib.sha512(user['password']+checkUser.Salt).hexdigest()
   if hashedPW == checkUser.Password:
     return jsonify( 
@@ -70,32 +102,3 @@ def checkLogin(user):
     )
   else:
     return json.dumps(False)
-  
-# user being passed in here is user data from the form
-def getUserID(user):
-  # accessing the email of that user from form
-  userEmail = user['email']
-  checkUser = db.session.query(Users.UserID, Users.Salt, Users.Password).filter(Users.Email == userEmail).first()
-  if checkUser is None:
-    # when returning bools, change to json.dumps(bool)
-    return json.dumps(False)
-  
-  # we might want to encapsulate this into a method
-  hashedPW = hashlib.sha512(user['password']+checkUser.Salt).hexdigest()
-  if hashedPW == checkUser.Password:
-    return checkUser.UserID
-  else:
-    return json.dumps(False)
-  
-
-def getHeartRateTypes():
-  heartRateTypes = db.session.query(LKHeartRateType.HeartRateTypeID, LKHeartRateType.HeartRateTypeDescription).all()
-  return jsonify( heartRateTypes )
-
-def addHeartRate(HR, UserID):
-  BPM = HR['heartRateValue']
-  HeartRateTypeID = HR['heartRateType']
-  HeartRate = HeartRates(HeartRateTypeID=HeartRateTypeID, BPM=BPM, UserID=UserID, CreateDT=datetime.utcnow())
-  db.session.add(HeartRate)
-  db.session.commit()
-  return json.dumps(True)

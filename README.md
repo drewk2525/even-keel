@@ -1,18 +1,10 @@
-# even-keel-vue
+# Even Keel
 
-> Even Keel vue
+This is the start of a project to help rowing coaches track athlete workouts, performance, etc.  This project utilizes the following stack:
 
-## Build Setup
+- MariaDB
+- Flask
+- SQLAlchemy
+- Vue.js
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Flask and SQLAlchemy are used to serve up an API while Vue.js handles the view and front end functionality.

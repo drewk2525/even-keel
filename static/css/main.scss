@@ -1,172 +1,9 @@
-////  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-//
-//$errorColor: #dd3333;
-////$errorFontColor: #f3f3f3;
-//
-//* {
-//  box-sizing: border-box;
-//}
-//
-//html{
-//  text-align: center;
-//  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-//}
-//
-//.container{
-//  margin-left: auto;
-//  margin-right: auto;
-//  width: 960px;
-//}
-//
-//
-//input.error{
-//  border: 2px solid $errorColor;
-//}
-//
-//fieldset.error{
-//  border: 5px solid $errorColor;
-//  color: $errorColor;
-//  font-weight: bold;
-//  width: 100%;
-//}
-//
-//ul.error:before {
-//  content:"";
-//  position:absolute;
-//  display:block;
-//  width:0;
-//  border-color:$errorColor transparent;
-//  top:-20px; /* value = - border-top-width - border-bottom-width */
-//  bottom:auto;
-//  left:auto;
-//  right:20px; /* controls horizontal position */
-//  border-width:0 20px 20px;
-//  border-style: solid;
-//}
-//ul.error:after {
-//  content:"";
-//  position:absolute;
-//  display: block;
-//  width:0;
-//  border-color: #fff transparent;
-//  top:-15px; /* value = - border-top-width - border-bottom-width */
-//  bottom:auto;
-//  left:auto;
-//  right:25px; /* value = (:before right) + (:before border-right) - (:after border-right) */
-//  border-width:0 15px 15px;
-//  border-style: solid;
-//}
-//ul.error{
-//  padding-top: 5px;
-//  padding-bottom: 5px;
-//  font-size: 0.9em;
-//  margin-left: 25%;
-//  position: relative;
-//  text-align: left;
-//  width: 70%;
-//  color: $errorColor;
-//  font-weight: bold;
-//  border: 3px solid $errorColor;
-//  border-radius: 15px;
-//}
-//
-////.error{
-////  color: $errorColor;
-////  font-weight: bold;
-////}
-//
-//header{
-//  text-align: left;
-//  display: grid;
-//  grid-template-columns: 1fr 1fr;
-//  border-bottom: 2px solid black;
-//  margin-bottom: 20px;
-//  .title{
-//    text-align: right;
-//  }
-//}
-//
-//.home.main-body{
-//  text-align: center;
-//  display: grid;
-//  grid-template-columns: 1fr 1fr;
-//  .login{
-//    
-//  }
-//  .new-account{
-//    
-//  }
-//}
-//
-//form{
-//  input, button{
-//    transition: all 0.6s ease;
-//	-moz-transition: all 0.6s ease;
-//	-webkit-transition: all 0.6s ease;
-//	-o-transition: all 0.6s ease;
-//	-ms-transition: all 0.6s ease;
-//  }
-//  fieldset{
-//    margin-bottom: 10px;
-//    width: 80%;
-//    margin-left: auto;
-//    margin-right: auto;
-//  }
-//  label{
-//    display: inline-block;
-//    text-align: right;
-//    width: 40%;
-//  }
-//  label.radio-label{
-//    width: 80px;
-//  }
-//  input{
-//    margin: 5px auto 5px;
-//    display: inline-block;
-//    height: 30px;
-//    border-radius: 5px;
-//    width: 50%;
-//  }
-//  input[type="radio"]{
-//    margin: 10px 5px;
-//    width: 15px;
-//    height: 15px;
-//  }
-//  input:hover, input:focus{
-//    background: #dfe5ec;
-//	color: #414848;
-//  }
-//  button{
-//    width: 120px;
-//    height: 45px;
-//    float: right;
-//    margin-right: 5%;
-//    text-shadow: 0px 1px 0 rgba(0,0,0,0.25);
-//    font-size: 16px;
-//    color: #ffffff;
-//    background: #46b0d1;
-//	border: 1px solid #46b3d3;
-//	border-radius: 5px;
-//	cursor: pointer;
-//    box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-//	-moz-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-//	-webkit-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-//  }
-//  button:hover{
-//    background: #308da8;
-//	border: 1px solid rgba(256,256,256,0.75);
-//	box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-//	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-//	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-//  }
-//}
-
 $darkBlue: #1C2A3F;
 $blue: #85A4B9;
-$lightBlue: #E6E7E8;
+$lightBlue: #D0E1F0;
 $green: #88C651;
-$offwhite: #F2F4F6;
-$lightGrey: #E6E7E7;
+$offWhite: #F2F4F6;
+$lightGrey: #E6E7E8;
 $red: #cf4242;
 $lightOrange: #FEEAC9;
 $orange: #FA9944;
@@ -189,6 +26,11 @@ body{
     }
     .title{
       text-align: right;
+    }
+    h1{
+      font-size: 1.6em;
+      position: absolute;
+      right: 0;
     }
   }
   nav{
@@ -221,8 +63,26 @@ body{
     color: $darkBlue;
     border: 2px solid $orange!important;
   }
+  .alert.alert{
+    width: 100%;
+    text-align: center;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+  .alert>div{
+    flex: none;
+    position: absolute;
+    margin-left: 50%;
+    left: -200px;
+    width: 400px;
+  }
+  .alert a{
+    margin-left: 50%;
+    left: 500px;
+    position: absolute;
+  }
   .alert .alert__icon.icon, .alert__dismissible .icon {
-    color: $orange;
+    //color: $orange;
   }
 }
 
@@ -232,17 +92,130 @@ body{
   border-bottom: 1px solid $blue;
 }
 
-.mainBody{
+.myAppPage.mainBody{
   .mainBodyWrapper{
-    width: 100%;
+    grid-template-columns: 60px 100%;
+    padding: 0;
+  }
+  .mainTable{
+    border: 1px solid $lightBlue;
+    th{
+      background-color: $blue;
+      color: $lightBlue;
+      i{
+        color:$darkBlue;
+      }
+    }
+    .datatable thead th.column.sortable.active i{
+      opacity: 1;
+    }
+    .datatable thead th.column.sortable[aria-sort="none"]:hover i{
+      opacity: 0.4;
+    }
+  }
+  tbody {
+    tr:hover{
+      background-color: $lightGrey !important;
+    }
+    tr:nth-child(even){
+      background-color: $lightBlue;
+    }
+  }
+  .mainNavigation{
+    position: relative;
+    bottom: 0;
+    z-index: 10;
+    button{
+      display: block;
+      background-color: $darkBlue;
+      background-size: 190%;
+      width: 60px;
+      height: 60px;
+      transition: none;
+      border-radius: 0;
+      margin:0;
+      border: 1px solid $lightBlue;
+      position: relative;
+      z-index: 10;
+    }
+    button + span{
+      z-index: 9;
+      background-color: $green;
+      width: 60px;
+      font-size: 1.2em;
+      display: block;
+      overflow: hidden;
+      color: $darkBlue;
+      text-align: right;
+      float: left;
+      height: 60px;
+      padding: 0 10px 0 0;
+      line-height: 60px;
+      margin-top: -60px;
+      transition: width .4s;
+      transition-timing-function: linear;
+    }
+    button:hover{
+      background-color: $green;
+      border: none;
+      z-index: 11;
+    }
+    button:hover + span{
+      z-index: 10;
+      display: block;
+      width: 230px;
+      box-shadow: 2px 2px 5px #444444;
+    }
+    button.workouts{
+      background-image: url("../assets/dumbbellIcon.png");
+      background-repeat: no-repeat;
+      background-position: -55px 2px;
+    }
+    button.workouts:hover{
+      background-position: 2px 2px;
+    }
+    button.heartRates{
+      background-image: url("../assets/heartIcon.png");
+      background-repeat: no-repeat;
+      background-position: -55px 5px;
+    }
+    button.heartRates:hover{
+      background-position: 2px 5px;
+    }
+    button.athleteData{
+      background-image: url("../assets/rulerIcon.png");
+      background-repeat: no-repeat;
+      background-position: -54px 2px;
+    }
+    button.athleteData:hover{
+      background-position: 2px 2px;
+    }
+    button.performance{
+      background-image: url("../assets/clockIcon.png");
+      background-repeat: no-repeat;
+      background-position: -47px 1px;
+      background-size: 170%;
+    }
+    button.performance:hover{
+      background-position: 7px 1px;
+    }
+  }
+}
+
+.mainBody{
+  width: 100%;
+  .mainBodyWrapper{
+    width: 960px;
     text-align: center;
     display: grid;
     padding: 40px;
+    margin-left: auto;
+    margin-right: auto;
     form{
       margin-left: auto;
       margin-right: auto;
       width: 100%;
-      background-color: $offwhite;
+      background-color: $offWhite;
       border: 1px solid $blue;
       clear: both;
       padding: 50px 0;
@@ -274,7 +247,7 @@ body{
         width: 65%;
       }
       input:focus{
-        background-color: $offwhite;
+        background-color: $offWhite;
         border-color: $blue;
       }
       input[type="radio"]{
@@ -297,6 +270,21 @@ body{
 }
 
 /*
+    Modals
+*/
+.card{
+  padding: 10px;
+}
+.card>:first-child{
+  background-color: $blue;
+  color: $offWhite;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: none;
+}
+
+/*
     Buttons
 */
 body{
@@ -307,6 +295,7 @@ body{
     font-size: 1.5em;
     color: $darkBlue;
     transition: 0.3s;
+    border: 1px solid $darkBlue;
   }
   button:hover{
     box-shadow: 3px 3px 10px #000000;
@@ -426,7 +415,7 @@ body{
       font-weight: 700;
     }
     .registrationTab.active{
-      background-color: $offwhite;
+      background-color: $offWhite;
       border-bottom: none;
       box-shadow: none;
     }

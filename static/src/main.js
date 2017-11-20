@@ -12,10 +12,26 @@ import MyApp from './myApp.vue'
 import Login from './login.vue'
 import '../../node_modules/vuetify/dist/vuetify.min.css'
 import { getUserData } from '../js/session.js'
+import { clearAlerts } from '../js/basicMethods.js'
 //require('smoothscroll-polyfill').polyfill();
 
 Vue.use(VueRouter);
 Vue.use(Vuetify);
+
+Vue.filter('camel',function(str){
+    return str.toLowerCase().replace(/^\w|\s\w/g, function (letter) {
+    return letter.toUpperCase();
+    })
+});
+
+
+var moment = require('moment');
+
+Vue.filter('dateTime', function(date){
+  var d = moment(date).format("MM/DD/YYYY hh:mm a");
+  return d;
+});
+
 // Leaving this for reference for using a custom plugin
 // Vue.use($EvenKeel);
 
@@ -45,7 +61,14 @@ const router = new VueRouter({
   routes
 });
 
+var vm = new Vue({
+  el: '#app',
+  router,
+  render: h => h(App)
+});
+
 router.afterEach((to, from, next) => {
+  clearAlerts(vm.$children[0]);
   var h = document.getElementById("header");
   if(to.name == "home"){
     h.style.display = "none";
@@ -53,10 +76,3 @@ router.afterEach((to, from, next) => {
     h.style.display = "grid";
   }
 });
-
-var vm = new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
-});
-//console.log(Vue);

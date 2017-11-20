@@ -15,6 +15,10 @@ body {
       height: 120px; }
     body header .title {
       text-align: right; }
+    body header h1 {
+      font-size: 1.6em;
+      position: absolute;
+      right: 0; }
   body nav {
     color: #85A4B9;
     position: absolute;
@@ -40,65 +44,181 @@ body {
     background-color: #FEEAC9 !important;
     color: #1C2A3F;
     border: 2px solid #FA9944 !important; }
-  body .alert .alert__icon.icon, body .alert__dismissible .icon {
-    color: #FA9944; }
+  body .alert.alert {
+    width: 100%;
+    text-align: center;
+    height: 60px;
+    margin-bottom: 20px; }
+  body .alert > div {
+    flex: none;
+    position: absolute;
+    margin-left: 50%;
+    left: -200px;
+    width: 400px; }
+  body .alert a {
+    margin-left: 50%;
+    left: 500px;
+    position: absolute; }
 
 .mainBody .contentBody {
-  background-color: #E6E7E8;
+  background-color: #D0E1F0;
   border-top: 1px solid #85A4B9;
   border-bottom: 1px solid #85A4B9; }
 
-.mainBody .mainBodyWrapper {
-  width: 100%;
-  text-align: center;
-  display: grid;
-  padding: 40px; }
-  .mainBody .mainBodyWrapper form {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    background-color: #F2F4F6;
-    border: 1px solid #85A4B9;
-    clear: both;
-    padding: 50px 0; }
-    .mainBody .mainBodyWrapper form label {
-      width: 25%;
-      display: inline-block;
-      font-size: 1.3em;
-      float: left;
-      margin-left: 5px;
-      margin-top: 10px; }
-    .mainBody .mainBodyWrapper form label.radio-label {
-      width: auto;
-      margin-right: 50px;
-      font-size: 1.1em;
-      vertical-align: middle;
-      text-align: left;
-      float: none; }
-    .mainBody .mainBodyWrapper form input, .mainBody .mainBodyWrapper form select {
-      border: 2px solid #1C2A3F;
-      background-color: #E6E7E7;
-      height: 40px;
-      padding: 5px; }
-    .mainBody .mainBodyWrapper form input {
-      text-align: left;
-      margin: 5px 5% 15px 5px;
-      width: 65%; }
-    .mainBody .mainBodyWrapper form input:focus {
-      background-color: #F2F4F6;
-      border-color: #85A4B9; }
-    .mainBody .mainBodyWrapper form input[type="radio"] {
-      margin: 5px 15px 0 5px;
-      width: auto;
-      vertical-align: middle; }
-    .mainBody .mainBodyWrapper form ul.error {
-      text-align: left;
-      margin-left: 30%;
-      width: 65%;
-      margin-top: -10px;
-      margin-bottom: 15px; }
-    .mainBody .mainBodyWrapper form ul.error::input-placeholder {
+.myAppPage.mainBody .mainBodyWrapper {
+  grid-template-columns: 60px 100%;
+  padding: 0; }
+.myAppPage.mainBody .mainTable {
+  border: 1px solid #D0E1F0; }
+  .myAppPage.mainBody .mainTable th {
+    background-color: #85A4B9;
+    color: #D0E1F0; }
+    .myAppPage.mainBody .mainTable th i {
       color: #1C2A3F; }
+  .myAppPage.mainBody .mainTable .datatable thead th.column.sortable.active i {
+    opacity: 1; }
+  .myAppPage.mainBody .mainTable .datatable thead th.column.sortable[aria-sort="none"]:hover i {
+    opacity: 0.4; }
+.myAppPage.mainBody tbody tr:hover {
+  background-color: #E6E7E8 !important; }
+.myAppPage.mainBody tbody tr:nth-child(even) {
+  background-color: #D0E1F0; }
+.myAppPage.mainBody .mainNavigation {
+  position: relative;
+  bottom: 0;
+  z-index: 10; }
+  .myAppPage.mainBody .mainNavigation button {
+    display: block;
+    background-color: #1C2A3F;
+    background-size: 190%;
+    width: 60px;
+    height: 60px;
+    transition: none;
+    border-radius: 0;
+    margin: 0;
+    border: 1px solid #D0E1F0;
+    position: relative;
+    z-index: 10; }
+  .myAppPage.mainBody .mainNavigation button + span {
+    z-index: 9;
+    background-color: #88C651;
+    width: 60px;
+    font-size: 1.2em;
+    display: block;
+    overflow: hidden;
+    color: #1C2A3F;
+    text-align: right;
+    float: left;
+    height: 60px;
+    padding: 0 10px 0 0;
+    line-height: 60px;
+    margin-top: -60px;
+    transition: width .4s;
+    transition-timing-function: linear; }
+  .myAppPage.mainBody .mainNavigation button:hover {
+    background-color: #88C651;
+    border: none;
+    z-index: 11; }
+  .myAppPage.mainBody .mainNavigation button:hover + span {
+    z-index: 10;
+    display: block;
+    width: 230px;
+    box-shadow: 2px 2px 5px #444444; }
+  .myAppPage.mainBody .mainNavigation button.workouts {
+    background-image: url("../assets/dumbbellIcon.png");
+    background-repeat: no-repeat;
+    background-position: -55px 2px; }
+  .myAppPage.mainBody .mainNavigation button.workouts:hover {
+    background-position: 2px 2px; }
+  .myAppPage.mainBody .mainNavigation button.heartRates {
+    background-image: url("../assets/heartIcon.png");
+    background-repeat: no-repeat;
+    background-position: -55px 5px; }
+  .myAppPage.mainBody .mainNavigation button.heartRates:hover {
+    background-position: 2px 5px; }
+  .myAppPage.mainBody .mainNavigation button.athleteData {
+    background-image: url("../assets/rulerIcon.png");
+    background-repeat: no-repeat;
+    background-position: -54px 2px; }
+  .myAppPage.mainBody .mainNavigation button.athleteData:hover {
+    background-position: 2px 2px; }
+  .myAppPage.mainBody .mainNavigation button.performance {
+    background-image: url("../assets/clockIcon.png");
+    background-repeat: no-repeat;
+    background-position: -47px 1px;
+    background-size: 170%; }
+  .myAppPage.mainBody .mainNavigation button.performance:hover {
+    background-position: 7px 1px; }
+
+.mainBody {
+  width: 100%; }
+  .mainBody .mainBodyWrapper {
+    width: 960px;
+    text-align: center;
+    display: grid;
+    padding: 40px;
+    margin-left: auto;
+    margin-right: auto; }
+    .mainBody .mainBodyWrapper form {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      background-color: #F2F4F6;
+      border: 1px solid #85A4B9;
+      clear: both;
+      padding: 50px 0; }
+      .mainBody .mainBodyWrapper form label {
+        width: 25%;
+        display: inline-block;
+        font-size: 1.3em;
+        float: left;
+        margin-left: 5px;
+        margin-top: 10px; }
+      .mainBody .mainBodyWrapper form label.radio-label {
+        width: auto;
+        margin-right: 50px;
+        font-size: 1.1em;
+        vertical-align: middle;
+        text-align: left;
+        float: none; }
+      .mainBody .mainBodyWrapper form input, .mainBody .mainBodyWrapper form select {
+        border: 2px solid #1C2A3F;
+        background-color: #E6E7E8;
+        height: 40px;
+        padding: 5px; }
+      .mainBody .mainBodyWrapper form input {
+        text-align: left;
+        margin: 5px 5% 15px 5px;
+        width: 65%; }
+      .mainBody .mainBodyWrapper form input:focus {
+        background-color: #F2F4F6;
+        border-color: #85A4B9; }
+      .mainBody .mainBodyWrapper form input[type="radio"] {
+        margin: 5px 15px 0 5px;
+        width: auto;
+        vertical-align: middle; }
+      .mainBody .mainBodyWrapper form ul.error {
+        text-align: left;
+        margin-left: 30%;
+        width: 65%;
+        margin-top: -10px;
+        margin-bottom: 15px; }
+      .mainBody .mainBodyWrapper form ul.error::input-placeholder {
+        color: #1C2A3F; }
+
+/*
+    Modals
+*/
+.card {
+  padding: 10px; }
+
+.card > :first-child {
+  background-color: #85A4B9;
+  color: #F2F4F6;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: none; }
 
 /*
     Buttons
@@ -109,7 +229,8 @@ body button {
   height: 60px;
   font-size: 1.5em;
   color: #1C2A3F;
-  transition: 0.3s; }
+  transition: 0.3s;
+  border: 1px solid #1C2A3F; }
 body button:hover {
   box-shadow: 3px 3px 10px #000000;
   font-weight: bold; }

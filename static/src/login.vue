@@ -16,7 +16,7 @@
           </form>
         </div>
         <div v-else>
-          <form @submit.prevent="createNewUser">
+          <form @submit.prevent="createNewUser" id="registrationForm">
             <fieldset class="error" v-if="formErrorsExist > 0">
               Please correct errors on this form.
             </fieldset>
@@ -71,6 +71,7 @@
 <script> 
   import axios from 'axios'
   import { generalAPICall } from '../js/api.js'
+  import { clearAlerts } from '../js/basicMethods.js'
   
   export default {
     name: 'app',
@@ -119,12 +120,20 @@
         }
       },
       createNewUser: function(event){
+        this.$emit('reset-alerts');
         this.checkFormErrors();
         if (this.formErrorsExist > 0)
           return false;
         axios.post('/api/newUser', JSON.stringify(this.newUser) )
           .then(function(data){
-            this.user = data;
+            //this.user = data;
+            this.registrationMessage = data.data;
+            if (data.data == "Success"){
+              this.$emit('update-alert', data.data, "Your account has been successfully created!");
+              document.getElementById("registrationForm").reset();
+            } else{
+              this.$emit('update-alert', "Failure", data.data);
+            }
             this.$router.push('/myApp');
           }.bind(this));
       },

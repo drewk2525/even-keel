@@ -96,7 +96,6 @@
           .then(function(data){
             this.result = data;
             if(data['data'] != 0){
-              console.log(data);
               //re-routing and passing params, this.result goes to page
               this.$router.push({
                 //we had to use this name for the route, defined in main.js
@@ -142,6 +141,7 @@
       }
     },
     created: function(){
+      
     },
     beforeRouteEnter (to, from, next){
       axios.post('/api/checkValidSession')

@@ -8,16 +8,22 @@
       </div>
       <div class="title">
 <!--        <nav-bar @reload-nav="reloadNav"></nav-bar>-->
-<!--        <button v-if="validSession" @click="logout">Log Out</button>-->         <nav v-if="validSession">
+<!--        <button v-if="validSession" @click="logout">Log Out</button>-->
+        <nav v-if="validSession">
           <button @click="logout">Log Out</button>
         </nav>
         <nav v-else>
           | <a href="/">Home</a> | <a href="/">About</a> | <a href="/">Contact</a> |
         </nav>
       </div>
+      <h1 v-if="validSession">Welcome back {{ userData.firstName | camel }}</h1>
     </header>
-    <router-view :msg="msg" @update-session="updateIsValidSession">
-    </router-view>
+    <v-app>
+      <v-alert color="success" dismissible v-model="alertSuccess">{{ alertMessage }}</v-alert>
+      <v-alert color="error" dismissible v-model="alertFailure">{{ alertMessage }}</v-alert>
+      <router-view :msg="msg" @update-session="updateIsValidSession" @update-alert="updateAlert" @reset-alerts="resetAlerts">
+      </router-view>
+    </v-app>
   </div>
 </template>
 
@@ -25,6 +31,7 @@
   import axios from 'axios'
   import { isValidSession } from '../js/session.js'
   import navBar from './navBar.vue'
+  import { clearAlerts } from '../js/basicMethods.js'
   
   export default {
     name: 'app',
@@ -33,6 +40,9 @@
     },
     data () {
       return {
+        alertSuccess: false,
+        alertFailure: false,
+        alertMessage: '',
         validSession: false,
         userData: {}
       }
@@ -49,10 +59,26 @@
       },
       updateIsValidSession: function(userData){
         this.validSession = isValidSession(userData);
+        this.userData = userData;
+      },
+      resetAlerts: function(){
+        clearAlerts(this);
+      },
+      updateAlert: function(alertType, alertMessage){    
+        switch(alertType){
+          case "Success":
+            this.alertSuccess = true
+            break;
+          case "Failure":
+            this.alertFailure = true
+            break;
+        }
+        this.alertMessage = alertMessage;
+        window.scrollTo(0, 0);
       }
     },
     created: function(){
-
+      
     }
   }
 </script>

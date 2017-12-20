@@ -2377,3 +2377,64 @@ Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
     raise errorclass(errno, errval)
 IntegrityError: (pymysql.err.IntegrityError) (1062, u"Duplicate entry 'akroft@jahnelgroup.com' for key 'Email'") [SQL: u'INSERT INTO `Users` (`UserTypeID`, `FirstName`, `LastName`, `Email`, `Salt`, `Password`) VALUES (%(UserTypeID)s, %(FirstName)s, %(LastName)s, %(Email)s, %(Salt)s, %(Password)s)'] [parameters: {'FirstName': u'Andrew', 'UserTypeID': 1, 'LastName': u'Kroft', 'Password': '9acc566b0cd83d81869c67cc3a8f19e95bfd9592743c9978fb429000bb4f1635673be24ad2eed425fa0b52b64fb883dc56f82545f76aae19bfc68abd089db6e0', 'Salt': 'ALDJPtyy4J59NecgDo6tbkahEKbuI9l8xVmpuzRahzpojKnYDFzZouEfj3jOHtnnw6RRWInOv8i7zOPTNfc1mdnCnvYYvw13LXcTtv0Y03I64g4nU4EdsXiPRr00U3Eh', 'Email': u'akroft@jahnelgroup.com'}]
+2017-11-22 20:25:49,547 ERROR $(message)s
+Traceback (most recent call last):
+  File "/Users/andrewkroft/Documents/Web Projects/even-keel/dataModel.py", line 43, in add_user
+    db.session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/scoping.py", line 157, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 906, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 461, in commit
+    self._prepare_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 441, in _prepare_impl
+    self.session.flush()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2171, in flush
+    self._flush(objects)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2291, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2255, in _flush
+    flush_context.execute()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 389, in execute
+    rec.execute(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 548, in execute
+    uow
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 181, in save_obj
+    mapper, table, insert)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 835, in _emit_insert_statements
+    execute(statement, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 263, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1053, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1402, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Library/Python/2.7/site-packages/pymysql/cursors.py", line 166, in execute
+    result = self._query(query)
+  File "/Library/Python/2.7/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/Library/Python/2.7/site-packages/pymysql/connections.py", line 856, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/Library/Python/2.7/site-packages/pymysql/connections.py", line 1057, in _read_query_result
+    result.read()
+  File "/Library/Python/2.7/site-packages/pymysql/connections.py", line 1340, in read
+    first_packet = self.connection._read_packet()
+  File "/Library/Python/2.7/site-packages/pymysql/connections.py", line 1014, in _read_packet
+    packet.check_error()
+  File "/Library/Python/2.7/site-packages/pymysql/connections.py", line 393, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/Library/Python/2.7/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+IntegrityError: (pymysql.err.IntegrityError) (1062, u"Duplicate entry 'drewk2525@yahoo.com' for key 'Email'") [SQL: u'INSERT INTO `Users` (`UserTypeID`, `FirstName`, `LastName`, `Email`, `Salt`, `Password`) VALUES (%(UserTypeID)s, %(FirstName)s, %(LastName)s, %(Email)s, %(Salt)s, %(Password)s)'] [parameters: {'FirstName': u'Andrew', 'UserTypeID': 1, 'LastName': u'Kroft', 'Password': '3c453e7f26ab97d522701319e6b8a2c853e8a7d32468beea6b8f5d57badfbb27aa2b3a456cd1151ab7258d044b650aabb8de870cebd5a492e604708d7c9210ad', 'Salt': 'VZJQdJbgrIt97TrjwbCHmFFEfFlsBiMTwAhjzVKk6VOqXFRKOEM2HUkgcGrX02cpucmbARUHLe8kC3jfstdAb61hFJX4YwC6GriJ68uXIWmQvFvWeSF3W4KvzwpOf9LB', 'Email': u'drewk2525@yahoo.com'}]

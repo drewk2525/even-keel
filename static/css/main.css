@@ -86,19 +86,22 @@ body {
 .myAppPage.mainBody .mainNavigation {
   position: relative;
   bottom: 0;
-  z-index: 10; }
+  z-index: 10;
+  margin-top: 60px; }
   .myAppPage.mainBody .mainNavigation button {
     display: block;
     background-color: #1C2A3F;
     background-size: 190%;
     width: 60px;
-    height: 60px;
+    height: 64px;
     transition: none;
     border-radius: 0;
     margin: 0;
     border: 1px solid #D0E1F0;
     position: relative;
-    z-index: 10; }
+    z-index: 10;
+    background-position: -55px 2px;
+    background-repeat: no-repeat; }
   .myAppPage.mainBody .mainNavigation button + span {
     z-index: 9;
     background-color: #88C651;
@@ -118,37 +121,24 @@ body {
   .myAppPage.mainBody .mainNavigation button:hover {
     background-color: #88C651;
     border: none;
-    z-index: 11; }
+    z-index: 11;
+    background-position: 2px 2px; }
   .myAppPage.mainBody .mainNavigation button:hover + span {
     z-index: 10;
     display: block;
     width: 230px;
     box-shadow: 2px 2px 5px #444444; }
   .myAppPage.mainBody .mainNavigation button.workouts {
-    background-image: url("../assets/dumbbellIcon.png");
-    background-repeat: no-repeat;
-    background-position: -55px 2px; }
-  .myAppPage.mainBody .mainNavigation button.workouts:hover {
-    background-position: 2px 2px; }
+    background-image: url("../assets/dumbbellIcon.png"); }
   .myAppPage.mainBody .mainNavigation button.heartRates {
-    background-image: url("../assets/heartIcon.png");
-    background-repeat: no-repeat;
-    background-position: -55px 5px; }
-  .myAppPage.mainBody .mainNavigation button.heartRates:hover {
-    background-position: 2px 5px; }
+    background-image: url("../assets/heartIcon.png"); }
   .myAppPage.mainBody .mainNavigation button.athleteData {
-    background-image: url("../assets/rulerIcon.png");
-    background-repeat: no-repeat;
-    background-position: -54px 2px; }
-  .myAppPage.mainBody .mainNavigation button.athleteData:hover {
-    background-position: 2px 2px; }
+    background-image: url("../assets/rulerIcon.png"); }
   .myAppPage.mainBody .mainNavigation button.performance {
-    background-image: url("../assets/clockIcon.png");
-    background-repeat: no-repeat;
-    background-position: -47px 1px;
-    background-size: 170%; }
-  .myAppPage.mainBody .mainNavigation button.performance:hover {
-    background-position: 7px 1px; }
+    background-image: url("../assets/clockIcon.png"); }
+  .myAppPage.mainBody .mainNavigation button.activeButton {
+    background-color: #88C651;
+    background-position: 2px 2px; }
 
 .mainBody {
   width: 100%; }
@@ -221,6 +211,97 @@ body {
   padding: none; }
 
 /*
+    Dashboard
+*/
+.dashboardActions {
+  height: 60px;
+  width: 100%;
+  text-align: right;
+  position: relative; }
+  .dashboardActions button {
+    margin-top: 20px;
+    height: 40px;
+    width: 150px;
+    font-size: 1.2em; }
+  .dashboardActions h1 {
+    position: absolute;
+    left: -60px;
+    top: 10px;
+    margin: 0;
+    color: #7bbf3f;
+    font-size: 2.5em; }
+
+.deleteButton {
+  background-color: #cf4242;
+  color: #F2F4F6; }
+
+.deleteButton:hover {
+  background-color: #d45656; }
+
+.addButton {
+  background-color: #88C651;
+  color: #1C2A3F; }
+
+.addButton:hover {
+  background-color: #95cc64; }
+
+#dashboardDataTable th {
+  font-size: 1.2em; }
+#dashboardDataTable tr {
+  height: 30px; }
+#dashboardDataTable tr.datatable__expand-row {
+  height: auto;
+  background-color: #ffffff !important; }
+#dashboardDataTable tr.datatable__expand-row:hover {
+  background-color: #ffffff !important; }
+#dashboardDataTable tbody td {
+  height: 30px; }
+#dashboardDataTable thead tr {
+  height: 40px; }
+#dashboardDataTable .datatable__expand-content h2 {
+  width: 98%;
+  float: right;
+  border: 1px solid #1C2A3F;
+  border-right: none;
+  border-left: none;
+  color: #F2F4F6;
+  background-color: #1C2A3F;
+  text-align: left;
+  padding-left: 15%; }
+#dashboardDataTable .workoutSession table tr {
+  cursor: crosshair; }
+#dashboardDataTable .workoutSession table tr:nth-child(2n) {
+  cursor: default; }
+#dashboardDataTable .workoutTable table {
+  width: 98%;
+  float: right; }
+  #dashboardDataTable .workoutTable table tr {
+    background-color: #ffffff;
+    text-align: left; }
+  #dashboardDataTable .workoutTable table td {
+    padding: 0; }
+  #dashboardDataTable .workoutTable table tr:nth-child(even) {
+    background-color: #D0E1F0; }
+
+.mainTable.workoutSessionTable tbody tr:nth-child(4n-1) {
+  background-color: #D0E1F0; }
+.mainTable.workoutSessionTable tbody td.rowCheckbox {
+  width: 15%;
+  position: relative; }
+.mainTable.workoutSessionTable tbody td.rowCheckbox > i {
+  position: absolute;
+  left: 10%;
+  top: 0; }
+.mainTable.workoutSessionTable tbody tr {
+  cursor: pointer !important;
+  background-color: #ffffff; }
+.mainTable.workoutSessionTable tbody tr:nth-child(even) {
+  cursor: default !important; }
+
+.expandedRow {
+  transform: rotate(90deg); }
+
+/*
     Buttons
 */
 body button {
@@ -245,6 +326,12 @@ body button.greenButton:hover {
 body button[type="submit"] {
   margin-bottom: 30px;
   margin-right: 5%; }
+
+.application .theme--light.btn.blueButton:not(.btn--icon):not(.btn--flat) {
+  background-color: #85A4B9; }
+
+.application .theme--light.btn.blueButton:not(.btn--icon):not(.btn--flat):hover {
+  background-color: #95b0c2 ""; }
 
 /*
     Home Page

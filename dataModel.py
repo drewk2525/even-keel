@@ -4,6 +4,7 @@ import hashlib
 import logging
 from database import db
 from datetime import datetime
+from sqlalchemy import and_, or_, not_
 
 logger = logging.getLogger('even_keel')
 hdlr = logging.FileHandler('static/logs/even_keel.log')
@@ -11,6 +12,42 @@ formatter = logging.Formatter('%(asctime)s %(levelname)s $(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 logger.setLevel(logging.INFO)
+
+
+def create_salt():
+    alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    chars = []
+    for i in range(128):
+        chars.append(random.choice(alphabet))
+
+    return "".join(chars)
+
+
+# user being passed in here is user data from the form
+def check_login(user):
+    # accessing the email of that user from form
+    user_email = user['email']
+    check_user = db.session.query(Users.UserID, Users.FirstName, Users.LastName,
+                                 Users.Email, Users.Salt, Users.Password,
+                                 Users.UserTypeID,
+                                 LKUserType.UserTypeDescription).join(
+        LKUserType).filter(Users.Email == user_email).first()
+    if check_user is None:
+        # when returning bools, change to json.dumps(bool)
+        return json.dumps(False)
+
+    hashed_pw = hashlib.sha512(user['password'] + check_user.Salt).hexdigest()
+    if hashed_pw == check_user.Password:
+        return jsonify(
+            firstName=check_user.FirstName,
+            lastName=check_user.LastName,
+            email=check_user.Email,
+            userTypeID=check_user.UserTypeID,
+            userTypeDescription=check_user.UserTypeDescription
+        )
+    else:
+        return json.dumps(False)
+
 
 # User Table
 class Users(db.Model):
@@ -102,6 +139,24 @@ class LKUserType(db.Model):
         return user_types
 
 
+# LKWorkoutSessionType Table
+class LKWorkoutSessionType(db.Model):
+    __table__ = db.Table('LKWorkoutSessionType', db.metadata, autoload=True,
+                         autoload_with=db.engine)
+
+    @staticmethod
+    def get_workout_session_types_json(user_id=0):
+        user_type = db.session.query(Users.UserTypeID).filter(Users.UserID ==
+                                                              user_id).one()
+        workout_session_types = db.session.query(
+            LKWorkoutSessionType.WorkoutSessionTypeID,
+            LKWorkoutSessionType.WorkoutSessionTypeDescription).filter(
+             or_(LKWorkoutSessionType.UserType == user_type[0],
+                 user_type[0] == 0, LKWorkoutSessionType.UserType == None)
+             ).order_by(LKWorkoutSessionType.WorkoutSessionTypeID).all()
+        return jsonify([r._asdict() for r in workout_session_types])
+
+
 # HeartRates Table
 class HeartRates(db.Model):
     __table__ = db.Table('HeartRates', db.metadata, autoload=True,
@@ -143,6 +198,13 @@ class Workout(db.Model):
         self.WorkoutSessionID = None
         self.WorkoutDescription = None
 
+    def add_workout(self, workout):
+        self.WorkoutSessionID = workout['workoutSessionID']
+        self.WorkoutDescription = workout['workoutDescription']
+        db.session.add(self)
+        db.session.commit()
+        return json.dumps(True)
+
     @staticmethod
     def get_user_workouts(user_id):
         user_workouts = db.session.query(Workout.WorkoutID,
@@ -156,41 +218,88 @@ class Workout(db.Model):
         return jsonify([r._asdict() for r in user_workouts])
 
 
+class WorkoutSets(db.Model):
+    __table__ = db.Table('WorkoutSets', db.metadata, autoload=True,
+                         autoload_with=db.engine)
+
+    def __init__(self):
+        self.WorkoutSetID = None
+        self.WorkoutID = None
+        self.WorkoutSetTypeID = None
+        self.Weight = None
+        self.Reps = None
+        self.ExerciseTime = None
+        self.SplitTime = None
+        self.SPM = None
+        self.RestTime = None
+        self.DesiredIntensity = None
+        self.DesiredIntensityTypeID = None
+        self.HeartRateID = None
+
+    def add_workout_set(self, workout_set):
+        print "Adding new set"
+
+    @staticmethod
+    def get_user_workout_sets(user_id):
+        user_workout_sets = db.session.query(WorkoutSets.WorkoutSetID,
+                                             WorkoutSets.WorkoutID,
+                                             WorkoutSets.WorkoutSetTypeID,
+                                             WorkoutSets.Weight,
+                                             WorkoutSets.Reps,
+                                             WorkoutSets.ExerciseTime,
+                                             WorkoutSets.SplitTime,
+                                             WorkoutSets.SPM,
+                                             WorkoutSets.RestTime,
+                                             WorkoutSets.DesiredIntensity,
+                                             WorkoutSets.DesiredIntensityTypeID,
+                                             WorkoutSets.HeartRateID).join(
+            Workout).join(WorkoutSession).filter(WorkoutSession.UserID ==
+                                                 user_id).all()
+        return jsonify([r._asdict() for r in user_workout_sets])
+        # return jsonify(user_workout_sets)
+        # return json.dumps(user_workout_sets, default=json_util.default)
+
+
 class WorkoutSession(db.Model):
     __table__ = db.Table('WorkoutSession', db.metadata, autoload=True,
                          autoload_with=db.engine)
 
+    def __init__(self):
+        self.WorkoutSessionTypeID = None
+        self.UserID = None
+        self.WorkoutSessionDescription = None
+        self.CreateDT = None
 
-def create_salt():
-    alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    chars = []
-    for i in range(128):
-        chars.append(random.choice(alphabet))
+    def add_workout_session(self, workout_session, user_id):
+        self.WorkoutSessionTypeID = workout_session['workoutSessionTypeID']
+        self.UserID = user_id
+        self.WorkoutSessionDescription = workout_session[
+            'workoutSessionDescription']
+        self.CreateDT = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
+        return json.dumps(True)
 
-    return "".join(chars)
+    @staticmethod
+    def get_user_workout_sessions(user_id):
+        user_workout_sessions = db.session.query(
+            WorkoutSession.WorkoutSessionID,
+            WorkoutSession.WorkoutSessionTypeID,
+            WorkoutSession.WorkoutSessionDescription,
+            WorkoutSession.CreateDT,
+            LKWorkoutSessionType.WorkoutSessionTypeDescription
+        ).join(LKWorkoutSessionType).filter(WorkoutSession.UserID ==
+                                          user_id).all()
+        return jsonify([r._asdict() for r in user_workout_sessions])
 
-
-# user being passed in here is user data from the form
-def check_login(user):
-    # accessing the email of that user from form
-    user_email = user['email']
-    check_user = db.session.query(Users.UserID, Users.FirstName, Users.LastName,
-                                 Users.Email, Users.Salt, Users.Password,
-                                 Users.UserTypeID,
-                                 LKUserType.UserTypeDescription).join(
-        LKUserType).filter(Users.Email == user_email).first()
-    if check_user is None:
-        # when returning bools, change to json.dumps(bool)
-        return json.dumps(False)
-
-    hashed_pw = hashlib.sha512(user['password'] + check_user.Salt).hexdigest()
-    if hashed_pw == check_user.Password:
-        return jsonify(
-            firstName=check_user.FirstName,
-            lastName=check_user.LastName,
-            email=check_user.Email,
-            userTypeID=check_user.UserTypeID,
-            userTypeDescription=check_user.UserTypeDescription
-        )
-    else:
-        return json.dumps(False)
+    @staticmethod
+    def check_user_workout_session(user_id, workout_session_id):
+        user_workout_session = db.session.query(
+            WorkoutSession.WorkoutSessionID).filter(WorkoutSession.UserID ==
+                                                    user_id).filter(
+            WorkoutSession.WorkoutSessionID == workout_session_id).all()
+        if user_workout_session > 0:
+            return_value = True
+        else:
+            return_value = False
+        return return_value

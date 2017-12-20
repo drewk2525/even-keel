@@ -125,18 +125,21 @@ body{
     position: relative;
     bottom: 0;
     z-index: 10;
+    margin-top: 60px;
     button{
       display: block;
       background-color: $darkBlue;
       background-size: 190%;
       width: 60px;
-      height: 60px;
+      height: 64px;
       transition: none;
       border-radius: 0;
       margin:0;
       border: 1px solid $lightBlue;
       position: relative;
       z-index: 10;
+      background-position: -55px 2px;
+      background-repeat: no-repeat;
     }
     button + span{
       z-index: 9;
@@ -159,6 +162,7 @@ body{
       background-color: $green;
       border: none;
       z-index: 11;
+      background-position: 2px 2px;
     }
     button:hover + span{
       z-index: 10;
@@ -168,36 +172,19 @@ body{
     }
     button.workouts{
       background-image: url("../assets/dumbbellIcon.png");
-      background-repeat: no-repeat;
-      background-position: -55px 2px;
-    }
-    button.workouts:hover{
-      background-position: 2px 2px;
     }
     button.heartRates{
       background-image: url("../assets/heartIcon.png");
-      background-repeat: no-repeat;
-      background-position: -55px 5px;
-    }
-    button.heartRates:hover{
-      background-position: 2px 5px;
     }
     button.athleteData{
       background-image: url("../assets/rulerIcon.png");
-      background-repeat: no-repeat;
-      background-position: -54px 2px;
-    }
-    button.athleteData:hover{
-      background-position: 2px 2px;
     }
     button.performance{
       background-image: url("../assets/clockIcon.png");
-      background-repeat: no-repeat;
-      background-position: -47px 1px;
-      background-size: 170%;
     }
-    button.performance:hover{
-      background-position: 7px 1px;
+    button.activeButton{
+      background-color: $green;
+      background-position: 2px 2px;
     }
   }
 }
@@ -285,6 +272,131 @@ body{
 }
 
 /*
+    Dashboard
+*/
+.dashboardActions{
+  height: 60px;
+  width: 100%;
+  text-align: right;
+  position: relative;
+  button{
+//    border-radius: 6px;
+    margin-top: 20px;
+    height: 40px;
+    width: 150px;
+    font-size: 1.2em;
+  }
+  h1{
+    position: absolute;
+    left: -60px;
+    top: 10px;
+    margin: 0;
+    color: darken($green, 5%);
+    font-size: 2.5em;
+  }
+}
+.deleteButton{  
+  background-color: $red;
+  color: $offWhite;
+}
+.deleteButton:hover{
+  background-color: lighten($red, 5%);
+}
+.addButton{
+  background-color: $green;
+  color: $darkBlue;
+}
+.addButton:hover{
+  background-color: lighten($green, 5%);
+}
+#dashboardDataTable{
+  th{
+    font-size: 1.2em;
+  }
+  tr{
+    height: 30px;
+  }
+  tr.datatable__expand-row{
+    height: auto;
+    background-color: #ffffff !important;
+  }
+  tr.datatable__expand-row:hover{
+    background-color: #ffffff !important;
+  }
+  tbody{
+    td{
+      height: 30px;
+    }
+  }
+  thead{
+    tr{
+      height: 40px;
+    }
+  }
+  .datatable__expand-content h2{
+    width: 98%;
+    float: right;
+    border: 1px solid $darkBlue;
+    border-right: none;
+    border-left: none;
+    color: $offWhite;
+    background-color: $darkBlue;
+    text-align: left;
+    padding-left: 15%;
+  }
+  .workoutSession table tr{
+    cursor: crosshair;
+  }
+  .workoutSession table tr:nth-child(2n){
+    cursor: default;
+  }
+  .workoutTable table{
+    width: 98%;
+    float: right;
+//    border-left: 1px solid $darkBlue;
+//    thead{
+//      display: none;
+//    }
+    tr{
+      background-color: #ffffff;
+      text-align: left;
+    }
+    td{
+      padding: 0;
+    }
+    tr:nth-child(even){
+      background-color: $lightBlue;
+    }
+  }
+}
+.mainTable.workoutSessionTable{
+  tbody{
+    tr:nth-child(4n-1){
+      background-color: $lightBlue;
+    }
+    td.rowCheckbox{
+      width: 15%;
+      position: relative;
+    }
+    td.rowCheckbox > i{
+      position: absolute;
+      left: 10%;
+      top: 0;
+    }
+    tr{
+      cursor: pointer !important;
+      background-color: #ffffff;
+    }
+    tr:nth-child(even){
+      cursor: default !important; 
+    }
+  }
+}
+.expandedRow{
+  transform: rotate(90deg);
+}
+
+/*
     Buttons
 */
 body{
@@ -317,6 +429,12 @@ body{
     margin-bottom: 30px;
     margin-right: 5%;
   }
+}
+.application .theme--light.btn.blueButton:not(.btn--icon):not(.btn--flat){
+  background-color: $blue;
+}
+.application .theme--light.btn.blueButton:not(.btn--icon):not(.btn--flat):hover{
+  background-color: lighten($blue, 5%)''
 }
 
 /*

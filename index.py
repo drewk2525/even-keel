@@ -3,7 +3,8 @@ from flask_session import Session
 # from flask_sqlalchemy import *
 # from flask.ext.session import Session
 from database import app, db
-from dataModel import Users, check_login, HeartRates, LKHeartRateType, Workout
+from dataModel import Users, check_login, HeartRates, LKHeartRateType, \
+    Workout, WorkoutSession, WorkoutSets, LKWorkoutSessionType
 import jinja2
 
 app.debug = True
@@ -68,6 +69,15 @@ def hr_types():
         return json.dumps(False)
 
 
+@app.route("/api/getWorkoutSessionTypes", methods=['POST'])
+def workout_session_types():
+    if request.method == 'POST':
+        return LKWorkoutSessionType.get_workout_session_types_json(session[
+                                                                       'userID'])
+    else:
+        return json.dumps(False)
+
+
 @app.route("/api/getUserHeartRates", methods=['POST'])
 def user_heart_rates():
     if request.method == 'POST':
@@ -87,9 +97,52 @@ def add_hr():
         return json.dumps(False)
 
 
+@app.route("/api/addWorkoutSession", methods=['POST'])
+def add_workout_session():
+    if request.method == 'POST':
+        workout_session = request.get_json(force=True, silent=True)
+        workout_session_result = WorkoutSession().add_workout_session(
+            workout_session, session['userID'])
+        return workout_session_result
+    else:
+        return json.dumps(False)
+
+
+@app.route("/api/addWorkout", methods=['POST'])
+def add_workout():
+    if request.method == 'POST':
+        workout = request.get_json(force=True, silent=True)
+        print WorkoutSession().check_user_workout_session(session['userID'],
+                                                        workout['workoutSessionID'])
+        if (WorkoutSession().check_user_workout_session(session['userID'],
+                                                        workout['workoutSessionID']) == True):
+            workout_result = Workout().add_workout(workout)
+            return workout_result
+        else:
+            return json.dumps(False)
+    else:
+        return json.dumps(False)
+
+
+@app.route("/api/getUserWorkoutSets", methods=['POST'])
+def get_user_workout_sets():
+    if request.method == 'POST':
+        return WorkoutSets.get_user_workout_sets(session['userID'])
+    else:
+        return json.dumps(False)
+
+
 @app.route("/api/getUserWorkouts", methods=['POST'])
 def get_user_workouts():
     if request.method == 'POST':
         return Workout.get_user_workouts(session['userID'])
+    else:
+        return json.dumps(False)
+    
+
+@app.route("/api/getUserWorkoutSessions", methods=['POST'])
+def get_user_workout_sessions():
+    if request.method == 'POST':
+        return WorkoutSession.get_user_workout_sessions(session['userID'])
     else:
         return json.dumps(False)

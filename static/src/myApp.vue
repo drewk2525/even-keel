@@ -2,10 +2,10 @@
   <div class="myAppPage mainBody">
     <div class="mainBodyWrapper">
       <nav class="mainNavigation">
-        <button class="workouts" id="workouts" @click="updateDataView"></button><span>Workouts</span>
-        <button class="heartRates" id="heartRates" @click="updateDataView"></button><span>Heart Rates</span>
-        <button class="athleteData" id="athleteData" @click="updateDataView"></button><span>Athlete Data</span>
-        <button class="performance" id="performance" @click="updateDataView"></button><span>Performance</span>
+        <button class="workouts" v-bind:class="{ activeButton: dataView == 'workouts' }" id="workouts" @click="updateDataView"></button><span>Workouts</span>
+        <button class="heartRates" v-bind:class="{ activeButton: dataView == 'heartRates' }" id="heartRates" @click="updateDataView"></button><span>Heart Rates</span>
+        <button class="athleteData" v-bind:class="{ activeButton: dataView == 'athleteData' }" id="athleteData" @click="updateDataView"></button><span>Athlete Data</span>
+        <button class="performance" v-bind:class="{ activeButton: dataView == 'performance' }" id="performance" @click="updateDataView"></button><span>Performance</span>
       </nav>
       <div>
         <workouts v-if="dataView == 'workouts'"></workouts>
@@ -35,7 +35,7 @@
     data () {
       return {
         userData: {},
-        dataView: "heartRates"
+        dataView: "workouts"
       }
     },
     methods: {

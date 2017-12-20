@@ -1,8 +1,12 @@
 function clearAlerts(t){
-  console.log(t);
   t.alertMessage = ""
   t.alertSuccess = false;
   t.alertFailure = false;
 }
 
-export { clearAlerts }
+function formatDateTime(date){
+  var moment = require('moment');
+  return moment(date).format("YYYY-MM-DD hh:mm:ss");
+}
+
+export { clearAlerts, formatDateTime }

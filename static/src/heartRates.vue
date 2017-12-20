@@ -1,50 +1,20 @@
 <template>
   <div>
-    <v-dialog v-model="heartRateModal" persistent max-width="400">
-      <v-btn color="primary" dark slot="activator" @click="resetForm">Add Heart Rate</v-btn>
-      <v-card>
-        <v-card-title>Add Heart Rate</v-card-title>
-<!--
-        <form v-on:submit.prevent="addHeartRate">
-          <fieldset>
-            <label for="heart-rate-type">Type of heart rate:</label>
-            <select name="heart-rate-type" v-model="newHeartRate.heartRateType">
-              <option v-for="hr in heartRateData" v-bind:value="hr[0]">{{ hr[1] }}</option>
-            </select>
-            <label for="heart-rate-value">HeartRate:</label>
-            <input type="text" name="heart-rate-value" placeholder="BPM" v-model="newHeartRate.heartRateValue"><br>
-          </fieldset>
-        </form>
--->
-        <v-select label="Type of heart rate" 
-                  required
-                  v-model="newHeartRate.heartRateType"
-                  v-bind:items="heartRateData"
-                  item-text="HeartRateTypeDescription"
-                  item-value="HeartRateTypeID"
-        >
-        </v-select>
-        <v-text-field label="Heart Rate" required v-model="newHeartRate.heartRateValue"></v-text-field>
-        <v-card-actions>
-          <v-btn color="primary darken-1" flat @click.native="heartRateModal = false">Cancel</v-btn>
-          <v-btn color="green darken-1" flat @click="addHeartRate">Submit</v-btn>
-        </v-card-actions>
-<!--
-            <v-alert success v-model="createdHeartRate">Successfully submitted Heart Rate</v-alert>
-            <v-alert error v-model="createdHeartRateError">There was an error submitting your Heart Rate.  Please try again later.</v-alert>
--->
-
-      </v-card>
-    </v-dialog>
+    <div class="dashboardActions">
+      <h1>Heart Rates</h1>
+      <button class="deleteButton">Delete Selected</button>
+      <button class="addButton" @click="openForm">Add Heart Rate</button>
+    </div>
     <v-data-table
-        v-bind:headers="heartRateHeaders"
-        v-bind:items="userHeartRates"
-        class="mainTable"
-        v-model="selected"
-        item-key="HeartRateID"
-        select-all
-        v-bind:rows-per-page-items="defaultRowsPerPage"
-      >
+      v-bind:headers="heartRateHeaders"
+      v-bind:items="userHeartRates"
+      class="mainTable"
+      v-model="selected"
+      item-key="HeartRateID"
+      select-all
+      v-bind:rows-per-page-items="defaultRowsPerPage"
+      id="dashboardDataTable"
+    >
       <template slot="items" scope="props">
         <td>
           <v-checkbox
@@ -59,6 +29,25 @@
         <td>{{ props.item.CreateDT | dateTime }}</td>
       </template>
     </v-data-table>
+    <v-dialog v-model="heartRateModal" persistent max-width="400">
+      <v-card>
+        <v-card-title>Add Heart Rate</v-card-title>
+        <v-select label="Type of heart rate" 
+                  required
+                  v-model="newHeartRate.heartRateType"
+                  v-bind:items="heartRateData"
+                  item-text="HeartRateTypeDescription"
+                  item-value="HeartRateTypeID"
+        >
+        </v-select>
+        <v-text-field label="Heart Rate" required v-model="newHeartRate.heartRateValue"></v-text-field>
+        <v-card-actions>
+          <v-btn color="primary darken-1" flat @click.native="heartRateModal = false">Cancel</v-btn>
+          <v-btn color="green darken-1" flat @click="addHeartRate">Submit</v-btn>
+        </v-card-actions>
+
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -125,9 +114,10 @@
           }
         }.bind(this));
       },
-      resetForm: function(){
+      openForm: function(){
         this.newHeartRate = { heartRateType: 1, heartRateValue: ''}
         this.$parent.$emit('reset-alerts');
+        this.heartRateModal = true;
       }
     },
     mounted: function(){

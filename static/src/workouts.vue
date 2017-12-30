@@ -210,6 +210,7 @@
     }, 
     methods: {
       addWorkoutSession: function(event){
+        console.log("Add Workout Session");
         generalAPICall('addWorkoutSession', this.newWorkoutSession).then(function(data){
           if(data === false){
             this.$parent.$emit('update-alert', "Failure", "Workout was not added, please try again later.");
@@ -222,6 +223,7 @@
               this.$refs.workoutSessionRef.expanded[this.expandWorkoutSessionID] = true;
               this.$forceUpdate();
             }.bind(this));
+            console.log("GOT HERE");
             this.$parent.$emit('update-alert', "Success", "Workout added successfully!");
             this.newWorkoutSessionModal = false;
           }

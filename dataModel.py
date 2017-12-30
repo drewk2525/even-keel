@@ -91,14 +91,14 @@ class Users(db.Model):
         # accessing the email of that user from form
         user_email = user['email']
         check_user = db.session.query(Users.UserID, Users.Salt,
-                                     Users.Password).filter(
+                                      Users.Password).filter(
             Users.Email == user_email).first()
         if check_user is None:
             # when returning bools, change to json.dumps(bool)
             return json.dumps(False)
 
         hashed_pw = hashlib.sha512(user['password'] +
-                                  check_user.Salt).hexdigest()
+                                   check_user.Salt).hexdigest()
         if hashed_pw == check_user.Password:
             return check_user.UserID
         else:
@@ -113,7 +113,7 @@ class LKHeartRateType(db.Model):
     @staticmethod
     def get_heart_rate_types_json():
         hr_types = db.session.query(LKHeartRateType.HeartRateTypeID,
-                                   LKHeartRateType.HeartRateTypeDescription).order_by(
+                                    LKHeartRateType.HeartRateTypeDescription).order_by(
             LKHeartRateType.HeartRateTypeID).all()
         return jsonify([r._asdict() for r in hr_types])
 

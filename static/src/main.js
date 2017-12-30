@@ -18,6 +18,8 @@ import { clearAlerts } from '../js/basicMethods.js'
 Vue.use(VueRouter);
 Vue.use(Vuetify);
 
+Vue.config.devtools = true
+
 Vue.filter('camel',function(str){
     return str.toLowerCase().replace(/^\w|\s\w/g, function (letter) {
     return letter.toUpperCase();

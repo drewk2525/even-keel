@@ -122,7 +122,7 @@ def add_workout():
     if request.method == 'POST':
         workout = request.get_json(force=True, silent=True)
         print WorkoutSession().check_user_workout_session(session['userID'],
-                                                        workout['workoutSessionID'])
+                                                          workout['workoutSessionID'])
         if (WorkoutSession().check_user_workout_session(session['userID'],
                                                         workout['workoutSessionID']) == True):
             workout_result = Workout().add_workout(workout)

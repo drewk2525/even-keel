@@ -5,6 +5,7 @@ npm-debug.log
 yarn-error.log
 static/css/.sass-cache/
 logs/*
+node_modules/*
 
 # Editor directories and files
 .idea

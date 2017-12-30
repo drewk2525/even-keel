@@ -5,6 +5,9 @@
       <button class="deleteButton">Delete Selected</button>
       <button class="addButton" @click="openNewWorkoutSessionForm">Add Workout</button>
     </div>
+    
+<!-- Workout Activities -->
+    
     <v-data-table
       v-bind:headers="workoutSessionHeader"
       v-bind:items="userWorkoutSessions"
@@ -31,6 +34,7 @@
           <td>{{ props.item.CreateDT | dateTime }}</td>
         </tr>
       </template>
+      
       <template slot="expand" slot-scope="props">
         <h2>Activities</h2>
         <v-btn color="primary darken-1" flat small @click.native="newWorkoutModal=!newWorkoutModal" v-if="!noWorkoutsInSession(props.item.WorkoutSessionID)">
@@ -63,9 +67,51 @@
               <td v-if="workout_props.item.WorkoutDescription">{{ workout_props.item.WorkoutDescription }}</td>
             </tr>
           </template>
+        
+          <!-- Workout Sets --> 
+            
+          <template slot="expand" slot-scope="props2">
+            <h2>Sets</h2>
+            <v-btn color="primary darken-1" flat small @click.native="newWorkoutSetModal=!newWorkoutSetModal" v-if="!noWorkoutSetsInSession(props2.item.WorkoutSessionID)">
+              Add New Set
+            </v-btn>
+            <v-card v-if="noWorkoutSetsInSession(props2.item.WorkoutSessionID) || newWorkoutSetModal">
+              <v-card-title>Add a new set to this activity:</v-card-title>
+              <v-text-field label="Set Description" required v-model="newWorkoutSet.workoutSetTypeID" ></v-text-field>
+              <v-card-actions>
+                <v-btn color="green darken-1" flat small @click="addSet(props.item.workoutSetID)">Add Set</v-btn>
+                <v-btn color="primary darken-1" flat small @click="newSetModal=!newSetModal">Cancel</v-btn>
+              </v-card-actions>
+            </v-card>
+            <v-data-table
+              v-bind:headers="workoutSetHeader"
+              v-bind:items="userWorkoutSets"
+              v-bind:rows-per-page-items="workoutRowsPerPage"
+              hide-actions
+              hide-headers
+              item-key="WorkoutSetID"
+              class="workoutSetTable"
+              ref="workoutSetRef"
+            >
+              <template slot="items" slot-scope="workout_set_props">
+<!--                @click="workout_set_props.expanded = !workout_set_props.expanded"-->
+                <tr v-if="showWorkoutSet(props2.item.WorkoutID, workout_set_props.item.WorkoutID)">
+                  <td class="rowCheckbox">
+<!--                    <v-icon medium v-bind:class="{ expandedRow: workout_set_props.expanded }">keyboard_arrow_right</v-icon>-->
+                  </td>
+                  <td v-if="workout_set_props.item.WorkoutSetID">{{ workout_set_props.item.WorkoutSetID }}</td>
+                </tr>
+              </template>
+            </v-data-table>
+          </template>
+          
         </v-data-table>
       </template>
+    
     </v-data-table>
+    
+    
+    
     <v-dialog v-model="newWorkoutSessionModal" persistent max-width="400">
       <v-card>
         <v-card-title>Add Workout</v-card-title>
@@ -86,6 +132,7 @@
 
       </v-card>
     </v-dialog>
+    
   </div>
 </template>
 
@@ -106,6 +153,7 @@
         userWorkoutSets: [],
         userWorkoutSessions: [],
         workoutSessionTypes: [],
+        workoutSetTypes: [],
         defaultRowsPerPage:[25, 50, 100, 200],
         workoutRowsPerPage:[1000],
         newWorkoutSessionModal: false,
@@ -147,6 +195,9 @@
         newWorkout:{
           workoutDescription: '',
           workoutSessionID: 0
+        },
+        newWorkoutSet:{
+          workoutSetTypeID: 1
         },
         workoutPagination: {
           sortBy: 'WorkoutID'
@@ -206,6 +257,9 @@
       showWorkout: function(a, b){
         return a == b;
       },
+      showWorkoutSet: function(a, b){
+        return a == b;
+      },
       noWorkoutsInSession: function(workoutSessionID){
         var workoutExists = 0;
         var i = 0;
@@ -216,15 +270,29 @@
         }
         return !workoutExists;
       },
+      noWorkoutSetsInSession: function(workoutSessionID, setID){
+        var setExists = 0;
+        var i = 0;
+        var j = 0;
+        for(i = 0; i < this.userWorkoutSets.length; i++){
+          if(this.userWorkouts[i].WorkoutSessionID == workoutSessionID){
+            for(j = 0; j < this.userWorkoutSessions.length; j++){
+              if(this.userWorkoutSessions[j].SetID == setID){
+                setExists = 1;
+              }
+            }
+          }
+        }
+        return !setExists;
+      },
       pullWorkoutData: function(){
         generalAPICall('getUserWorkouts').then(function(data){
           this.userWorkouts = data;
         }.bind(this));
         generalAPICall('getUserWorkoutSets').then(function(data){
           this.userWorkoutSets = data;
-          console.log(data);
         }.bind(this));
-        return generalAPICall('getUserWorkoutSessions').then(function(data){
+        generalAPICall('getUserWorkoutSessions').then(function(data){
           this.userWorkoutSessions = data;
           var i = 0;
           while(i < this.userWorkoutSessions.length){
@@ -232,9 +300,17 @@
             i++;
           }
         }.bind(this));
+        generalAPICall('getUserWorkoutSets').then(function(data){
+          this.userSets = data;
+          var i = 0;
+        }.bind(this));
         generalAPICall('getWorkoutSessionTypes').then(function(data){
           this.workoutSessionTypes = data;
           this.newWorkoutSession.workoutType = data[0];
+        }.bind(this));
+        generalAPICall('getWorkoutSetTypes').then(function(data){
+          this.workoutSetTypes = data;
+          this.newWorkoutSet.workoutSetType = data[0];
         }.bind(this));
       },
 //      expandNewWorkoutSession(props, sessionID){
@@ -250,6 +326,14 @@
         }
         props.expanded = !props.expanded
         this.newWorkoutModal = false;
+        this.$forceUpdate();
+      },
+      expandSet: function(props){
+        this.newSet = {
+          workoutSetID: 0
+        }
+        props.expanded = !props.expanded
+        this.newSettModal = false;
         this.$forceUpdate();
       }
     },

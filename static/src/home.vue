@@ -141,7 +141,7 @@
       }
     },
     created: function(){
-      
+      console.log(this);
     },
     beforeRouteEnter (to, from, next){
       axios.post('/api/checkValidSession')

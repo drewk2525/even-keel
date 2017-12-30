@@ -4,7 +4,7 @@ from flask_session import Session
 # from flask.ext.session import Session
 from database import app, db
 from dataModel import Users, check_login, HeartRates, LKHeartRateType, \
-    Workout, WorkoutSession, WorkoutSets, LKWorkoutSessionType
+    Workout, WorkoutSession, WorkoutSets, LKWorkoutSessionType, LKWorkoutSetType
 import jinja2
 
 app.debug = True
@@ -73,6 +73,15 @@ def hr_types():
 def workout_session_types():
     if request.method == 'POST':
         return LKWorkoutSessionType.get_workout_session_types_json(session[
+                                                                       'userID'])
+    else:
+        return json.dumps(False)
+
+
+@app.route("/api/getWorkoutSetTypes", methods=['POST'])
+def workout_set_types():
+    if request.method == 'POST':
+        return LKWorkoutSetType.get_workout_set_types_json(session[
                                                                        'userID'])
     else:
         return json.dumps(False)

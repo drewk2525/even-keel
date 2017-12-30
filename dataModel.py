@@ -157,6 +157,25 @@ class LKWorkoutSessionType(db.Model):
         return jsonify([r._asdict() for r in workout_session_types])
 
 
+# LKWorkoutSetType Table
+class LKWorkoutSetType(db.Model):
+    __table__ = db.Table('LKWorkoutSetType', db.metadata, autoload=True,
+                         autoload_with=db.engine)
+
+    @staticmethod
+    def get_workout_set_types_json(user_id=0):
+        user_type = db.session.query(Users.UserTypeID).filter(
+            Users.UserID ==
+            user_id).one()
+        workout_session_types = db.session.query(
+            LKWorkoutSetType.WorkoutSetTypeID,
+            LKWorkoutSetType.WorkoutSetTypeDescription).filter(
+            or_(LKWorkoutSetType.OwnerTypeID == user_type[0],
+                user_type[0] == 0, LKWorkoutSetType.OwnerTypeID == None)
+        ).order_by(LKWorkoutSetType.WorkoutSetTypeID).all()
+        return jsonify([r._asdict() for r in workout_session_types])
+
+
 # HeartRates Table
 class HeartRates(db.Model):
     __table__ = db.Table('HeartRates', db.metadata, autoload=True,

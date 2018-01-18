@@ -245,10 +245,27 @@ body {
 .addButton:hover {
   background-color: #95cc64; }
 
+.application .theme--light.icon, .theme--light .icon.addNoteButton {
+  color: #85A4B9; }
+
+.datatable__expand-content {
+  position: relative; }
+
+.btn--flat.addToWorkoutButton {
+  position: absolute !important;
+  margin-top: 1px !important;
+  right: 0;
+  top: 0;
+  background-color: #F2F4F6 !important; }
+
+.btn--flat.addToWorkoutButton:hover {
+  background-color: #D0E1F0 !important; }
+
 #dashboardDataTable th {
   font-size: 1.2em; }
 #dashboardDataTable tr {
-  height: 30px; }
+  height: 30px;
+  position: relative; }
 #dashboardDataTable tr.datatable__expand-row {
   height: auto;
   background-color: #ffffff !important; }
@@ -300,6 +317,30 @@ body {
 
 .expandedRow {
   transform: rotate(90deg); }
+
+.newSetCard > div {
+  width: 15%;
+  display: inline-block;
+  margin-right: 2%; }
+
+.newSetCard h3, .newSetCard h4 {
+  color: #85A4B9; }
+.newSetCard h3 {
+  border-bottom: 1px solid #85A4B9;
+  margin-top: 15px; }
+.newSetCard .card__actions, .newSetCard .card__title {
+  width: 100%; }
+.newSetCard .hours, .newSetCard .minutes {
+  margin-right: 0; }
+.newSetCard .hours, .newSetCard .minutes, .newSetCard .seconds {
+  width: 8%; }
+  .newSetCard .hours label, .newSetCard .minutes label, .newSetCard .seconds label {
+    font-size: 0.9em;
+    text-align: center; }
+.newSetCard span {
+  position: relative;
+  bottom: 35px;
+  font-size: 1.4em; }
 
 /*
     Buttons
@@ -360,8 +401,7 @@ body button[type="submit"] {
       position: absolute;
       width: 420px;
       margin-left: 50%;
-      left: -210px;
-      top: 95%; }
+      left: -210px; }
       .home .landingPage .buttons .landingRegisterButton, .home .landingPage .buttons .landingLoginButton {
         position: absolute;
         bottom: 30px;
@@ -376,7 +416,7 @@ body button[type="submit"] {
       /*top: 400px;*/ }
     .home .landingPage .parallax__image {
       width: 100%;
-      bottom: 50%; }
+      bottom: 75%; }
     .home .landingPage .logo {
       position: absolute;
       left: 20px;

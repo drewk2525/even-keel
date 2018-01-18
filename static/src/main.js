@@ -21,9 +21,36 @@ Vue.use(Vuetify);
 Vue.config.devtools = true
 
 Vue.filter('camel',function(str){
-    return str.toLowerCase().replace(/^\w|\s\w/g, function (letter) {
+  return str.toLowerCase().replace(/^\w|\s\w/g, function (letter) {
     return letter.toUpperCase();
-    })
+  });
+});
+
+Vue.filter('secondsToHours', function(sec){
+  var hours = Math.floor(sec/3600);
+  if(hours == 0){
+    hours = "";
+  } else {
+    hours = hours + ":"
+  }
+  return hours;
+});
+Vue.filter('secondsToMinutes', function(sec){
+  var hours = Math.floor(sec/3600);
+  var minutes = Math.floor((sec-hours*3600)/60);
+  if(hours > 0 && minutes < 10){
+    minutes = "0" + minutes;
+  }
+  return minutes;
+});
+Vue.filter('secondsToSeconds', function(sec){
+  var hours = Math.floor(sec/3600);
+  var minutes = Math.floor((sec-hours*3600)/60);
+  var seconds = (Math.round(10*parseFloat(sec - (hours*3600 + minutes*60)))/10).toFixed(1);
+  if(seconds < 10){
+    seconds = "0" + seconds;
+  }
+  return seconds;
 });
 
 

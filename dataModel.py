@@ -176,6 +176,26 @@ class LKWorkoutSetType(db.Model):
         return jsonify([r._asdict() for r in workout_session_types])
 
 
+# LKDistanceType Table
+class LKDistanceType(db.Model):
+    __table__ = db.Table('LKDistanceType', db.metadata, autoload=True,
+                         autoload_with=db.engine)
+
+    @staticmethod
+    def get_distance_types_json(user_id=0):
+        user_type = db.session.query(Users.UserTypeID).filter(
+            Users.UserID ==
+            user_id).one()
+        distance_types = db.session.query(
+            LKDistanceType.DistanceTypeID,
+            LKDistanceType.DistanceTypeDescription,
+            LKDistanceType.DistanceTypeUnits).filter(
+            or_(LKDistanceType.OwnerTypeID == user_type[0],
+                user_type[0] == 0, LKWorkoutSetType.OwnerTypeID == None)
+        ).order_by(LKDistanceType.DistanceTypeID).all()
+        return jsonify([r._asdict() for r in distance_types])
+
+
 # HeartRates Table
 class HeartRates(db.Model):
     __table__ = db.Table('HeartRates', db.metadata, autoload=True,
@@ -254,9 +274,31 @@ class WorkoutSets(db.Model):
         self.DesiredIntensity = None
         self.DesiredIntensityTypeID = None
         self.HeartRateID = None
+        self.DistanceTypeID = None
+        self.Distance = None
 
     def add_workout_set(self, workout_set):
         print "Adding new set"
+        self.WorkoutID = workout_set['workoutSetWorkoutID']
+        self.WorkoutSetTypeID = workout_set['workoutSetTypeID']
+        self.Weight = workout_set['workoutSetWeight']
+        self.Reps = workout_set['workoutSetReps']
+        self.ExerciseTime = (float(workout_set[
+                                 'workoutSetExerciseTimeHours'])*3600)\
+            + (float(workout_set[
+                                   'workoutSetExerciseTimeMinutes'])*60) + \
+            float(workout_set['workoutSetExerciseTimeSeconds'])
+        self.SplitTime = (float(workout_set[
+                                    'workoutSetSplitTimeMinutes'])*60) + \
+            float(workout_set['workoutSetSplitTimeSeconds'])
+        self.SPM = int(workout_set['workoutSetSPM'])
+        self.RestTime = (float(workout_set['workoutSetRestTimeMinutes'])*60) + \
+            float(workout_set['workoutSetRestTimeSeconds'])
+        self.DistanceTypeID = workout_set['workoutSetDistanceTypeID']
+        self.Distance = workout_set['workoutSetDistance']
+        db.session.add(self)
+        db.session.commit()
+        return json.dumps(True)
 
     @staticmethod
     def get_user_workout_sets(user_id):
@@ -265,14 +307,20 @@ class WorkoutSets(db.Model):
                                              WorkoutSets.WorkoutSetTypeID,
                                              WorkoutSets.Weight,
                                              WorkoutSets.Reps,
+                                             WorkoutSets.Distance,
+                                             LKDistanceType.DistanceTypeUnits,
+                                             LKDistanceType.DistanceTypeDescription,
                                              WorkoutSets.ExerciseTime,
                                              WorkoutSets.SplitTime,
                                              WorkoutSets.SPM,
                                              WorkoutSets.RestTime,
                                              WorkoutSets.DesiredIntensity,
                                              WorkoutSets.DesiredIntensityTypeID,
-                                             WorkoutSets.HeartRateID).join(
-            Workout).join(WorkoutSession).filter(WorkoutSession.UserID ==
+                                             WorkoutSets.HeartRateID,
+                                             LKWorkoutSetType.WorkoutSetTypeDescription).join(
+            Workout).join(WorkoutSession).join(LKWorkoutSetType).join(
+            LKDistanceType).filter(
+            WorkoutSession.UserID ==
                                                  user_id).all()
         return jsonify([r._asdict() for r in user_workout_sets])
         # return jsonify(user_workout_sets)
@@ -322,3 +370,46 @@ class WorkoutSession(db.Model):
         else:
             return_value = False
         return return_value
+
+
+class Notes(db.Model):
+    __table__ = db.Table('Notes', db.metadata, autoload=True,
+                         autoload_with=db.engine)
+
+    def __init__(self):
+        self.NoteID = None
+        self.SystemAreaTypeID = None
+        self.SystemAreaID = None
+        self.NoteContent = None
+        self.CreatedByUserID = None
+        self.ForUserID = None
+        self.CreateDT = None
+
+    def add_note(self, user_id, system_area_type_id, note_details):
+        self.SystemAreaTypeID = system_area_type_id
+        self.SystemAreaID = note_details['systemAreaID']
+        self.CreatedByUserID = user_id
+        if note_details['forUserID'] == 0:
+            note_details['forUserID'] = user_id
+        self.ForUserID = note_details['forUserID']
+        self.CreateDT = datetime.utcnow()
+        self.NoteContent = note_details['noteContent']
+        db.session.add(self)
+        db.session.commit()
+        return json.dumps(True)
+
+    @staticmethod
+    def get_notes(user_id, system_area_type_id, system_area_id):
+        notes = db.session.query(
+            Notes.NoteID,
+            Notes.SystemAreaTypeID,
+            Notes.SystemAreaID,
+            Notes.NoteContent,
+            Notes.CreateDT,
+            Users.FirstName,
+            Users.LastName
+        ).join(Users, Users.UserID == Notes.CreatedByUserID).filter(
+            Notes.ForUserID == user_id).filter(Notes.SystemAreaTypeID ==
+                                               system_area_type_id).filter(
+            Notes.SystemAreaID == system_area_id).all()
+        return jsonify([r._asdict() for r in notes])

@@ -6,7 +6,7 @@
       </nav>
     </div>
     <div class="landingPage">
-      <v-parallax src="/static/assets/singleRower.jpg" height="1100">
+      <v-parallax src="/static/assets/singleRower.jpg" height="750">
       </v-parallax>
       <img class="logo" src="../assets/logo.png">
       <div class="buttons">

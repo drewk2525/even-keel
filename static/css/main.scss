@@ -309,12 +309,32 @@ body{
 .addButton:hover{
   background-color: lighten($green, 5%);
 }
+.application .theme--light.icon, .theme--light .icon.addNoteButton{
+  color: $blue;
+}
+.tooltip.addNote{
+  
+}
+.datatable__expand-content{
+  position: relative;
+}
+.btn--flat.addToWorkoutButton{
+  position: absolute !important;
+  margin-top: 1px !important;
+  right: 0;
+  top:0;
+  background-color: $offWhite !important;
+}
+.btn--flat.addToWorkoutButton:hover{
+  background-color: $lightBlue !important;
+}
 #dashboardDataTable{
   th{
     font-size: 1.2em;
   }
   tr{
     height: 30px;
+    position: relative;
   }
   tr.datatable__expand-row{
     height: auto;
@@ -396,6 +416,40 @@ body{
   transform: rotate(90deg);
 }
 
+.newSetCard > div{
+  width: 15%;
+  display: inline-block;
+  margin-right: 2%;
+}
+
+.newSetCard{
+  h3, h4{
+    color: $blue;
+  }
+  h3{
+    border-bottom: 1px solid $blue;
+    margin-top: 15px;
+  }
+  .card__actions, .card__title{
+    width: 100%;
+  }
+  .hours, .minutes{
+    margin-right: 0;
+  }
+  .hours, .minutes, .seconds{
+    width: 8%;
+    label{
+      font-size: 0.9em;
+      text-align: center;
+    }
+  }
+  span{
+    position: relative;
+    bottom: 35px;
+    font-size: 1.4em;
+  }
+}
+
 /*
     Buttons
 */
@@ -469,7 +523,7 @@ body{
       width: 420px;
       margin-left: 50%;
       left: -210px;
-      top: 95%;
+      //top: 95%;
       .landingRegisterButton, .landingLoginButton{
         position: absolute;
         bottom: 30px;
@@ -489,7 +543,7 @@ body{
     }
     .parallax__image{
       width: 100%;
-      bottom: 50%;
+      bottom: 75%;
     }
     .logo{
       position: absolute;

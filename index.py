@@ -203,3 +203,7 @@ def get_user_workout_sessions():
         return WorkoutSession.get_user_workout_sessions(session['userID'])
     else:
         return json.dumps(False)
+
+
+if __name__ == "__main__":
+    app.run()

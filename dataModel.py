@@ -7,11 +7,11 @@ from datetime import datetime
 from sqlalchemy import and_, or_, not_
 import os, os.path
 
-if not os.path.exists("static/logs/"):
-    os.makedirs("static/logs/")
+# if not os.path.exists("static/logs/"):
+#     os.makedirs("static/logs/")
 
 logger = logging.getLogger('even_keel')
-hdlr = logging.FileHandler('static/logs/even_keel.log')
+hdlr = logging.FileHandler('even_keel.log')
 formatter = logging.Formatter('%(asctime)s %(levelname)s $(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)

@@ -74,6 +74,7 @@
       routeLoginRegister: function(event){
         var b = event.path[0].id;
         var i = b.indexOf("Button");
+        console.log("got here okay");
         b = b.substr(0, i);
         this.$router.push({
           name: 'registration',

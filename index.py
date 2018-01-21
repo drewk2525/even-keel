@@ -151,8 +151,8 @@ def add_workout_session():
 def add_workout():
     if request.method == 'POST':
         workout = request.get_json(force=True, silent=True)
-        print WorkoutSession().check_user_workout_session(session['userID'],
-                                                          workout['workoutSessionID'])
+        # print WorkoutSession().check_user_workout_session(session['userID'],
+        #                                                   workout['workoutSessionID'])
         if (WorkoutSession().check_user_workout_session(session['userID'],
                                                         workout['workoutSessionID']) == True):
             workout_result = Workout().add_workout(workout)
@@ -167,9 +167,9 @@ def add_workout():
 def add_workout_set():
     if request.method == 'POST':
         workout_set = request.get_json(force=True, silent=True)
-        print WorkoutSession().check_user_workout_session(session['userID'],
-                                                          workout_set[
-                                                              'workoutSetSessionID'])
+        # print WorkoutSession().check_user_workout_session(session['userID'],
+        #                                                   workout_set[
+        #                                                       'workoutSetSessionID'])
         if (WorkoutSession().check_user_workout_session(session['userID'],
                                                         workout_set[
                                                             'workoutSetSessionID']) == True):

@@ -10,12 +10,12 @@ import os, os.path
 # if not os.path.exists("static/logs/"):
 #     os.makedirs("static/logs/")
 
-logger = logging.getLogger('even_keel')
-hdlr = logging.FileHandler('even_keel.log')
-formatter = logging.Formatter('%(asctime)s %(levelname)s $(message)s')
-hdlr.setFormatter(formatter)
-logger.addHandler(hdlr)
-logger.setLevel(logging.INFO)
+# logger = logging.getLogger('even_keel')
+# hdlr = logging.FileHandler('even_keel.log')
+# formatter = logging.Formatter('%(asctime)s %(levelname)s $(message)s')
+# hdlr.setFormatter(formatter)
+# logger.addHandler(hdlr)
+# logger.setLevel(logging.INFO)
 
 
 def create_salt():
@@ -84,7 +84,7 @@ class Users(db.Model):
             db.session.commit()
         except Exception as e:
             return_value = "Failed to add new user, please try again later"
-            logger.exception(e)
+            # logger.exception(e)
         else:
             return_value = "Success"
         return return_value

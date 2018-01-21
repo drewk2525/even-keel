@@ -5,6 +5,10 @@ import logging
 from database import db
 from datetime import datetime
 from sqlalchemy import and_, or_, not_
+import os, os.path
+
+if not os.path.exists("static/logs/"):
+    os.makedirs("static/logs/")
 
 logger = logging.getLogger('even_keel')
 hdlr = logging.FileHandler('static/logs/even_keel.log')

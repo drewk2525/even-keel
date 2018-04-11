@@ -6,6 +6,7 @@ yarn-error.log
 static/css/.sass-cache/
 logs/*
 node_modules/*
+database.py
 
 # Editor directories and files
 .idea

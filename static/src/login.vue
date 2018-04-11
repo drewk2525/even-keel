@@ -149,6 +149,7 @@
                 params: this.result['data']
               });
             } else {
+              loginFail = true;
               console.log("Login Failed");
             }
         }.bind(this));
